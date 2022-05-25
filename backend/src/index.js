@@ -20,20 +20,20 @@ app.post('/api/login', (req,res) => {
   } else {
     res.sendStatus(400);
   }
-
 })
 
 
 // simulo una base de datos en memoria
 // vendedores
 
-const lista = [{codigo:100,nombre:"Maria"},{codigo:101,nombre:"Juan"}];
+const monedas = [{ticker:"BTC",nombre:"Bitcoin"},{ticker:"ETH",nombre:"Ethereum"}];
 
-app.get('/api/lista', (req,res) => {
+app.get('/api/monedas', (req,res) => {
   // CONSULTA A BASE DE DATOS
-  res.json(lista);
+  res.json(monedas);
 })
 
+/*
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
@@ -53,6 +53,8 @@ app.post('/api/setvendedor', (req,res) => {
   // revisar
 })
 
+
+ */
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
