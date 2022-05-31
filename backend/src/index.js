@@ -33,6 +33,45 @@ app.get('/api/monedas', (req,res) => {
   res.json(monedas);
 })
 
+
+
+//------------------------------------USUARIOS------------------------------------------------------------------------
+const usuarios = [{Id: 1, nombre: "Alejo", apellido: "Curello", email: "asd@gmail.com", password: "123456", listawallet: [1,2,3] }, 
+                  {Id: 2, nombre: "Santiago", apellido: "SantaMaria", email: "SS@gmail.com", password: "123456", listawallet: [1,3] }
+                ];
+
+
+
+app.get('/api/usuarios', (req,res) => {
+  // CONSULTA A BASE DE DATOS
+  res.json(usuarios);
+})
+
+app.delete('/api/usuarios/:codigo', (req,res) => {
+  const listaUsuarios = lista.map( e => { return e.codigo } )
+  const indice = listaUsuarios.indexOf(Number(req.params.codigo))
+  lista.splice(indice,1);
+})
+
+app.post('/api/usuarios', (req,res) => {
+  req.body.codigo = Number(req.body.codigo)
+  lista.push(req.body);
+})
+
+app.post('/api/usuarios', (req,res) => {
+  // revisar
+})
+
+/*
+Usuario
+nombre: String
+apellido: String
+email: String
+password: String
+listaWallet: [1,2,3,4]
+*/
+
+
 /*
 app.get('/', (req, res) => {
   res.send('Hello World!')
