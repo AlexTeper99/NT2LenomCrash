@@ -1,13 +1,25 @@
 <template>
   <div>
     <h2>Alta de usuario</h2>
-    <li v-for="usuario in lista" :key="usuario.codigo">
-      {{ usuario.codigo }} {{ usuario.nombre }} <button @click="eliminar(usuario.codigo)">Siempre anular</button>
+    <li v-for="user in lista" :key="user.codigo">
+      {{ user.id }} {{ user.nombre }} {{user.apellido}} {{user.email}} <button @click="eliminar(user.codigo)">Eliminar</button>
     </li>
     <p>
-      Codigo <input type="text" v-model="usuario.codigo" /> Nombre
-      <input type="text" v-model="usuario.nombre" />
+        <div>
+            ID <input type="text" v-model="usuario.id" />
+        </div>
+        <div>
+            Nombre <input type="text" v-model="usuario.nombre" />
+        </div>
+        <div>
+            Apellido <input type="text" v-model="usuario.apellido" />
+        </div>
+        <div>
+            Email <input type="email" v-model="usuario.email" />
+        </div>
+
       <button @click="agregar">Agregar usuario</button>
+
     </p>
     {{ mensajeError }}
   </div>
@@ -28,6 +40,7 @@ export default {
     try {
       const rta = await usuariosService.getUsuarios(); // ejemplo placeHolder.getDatos()
       this.lista = rta.data;
+ //     console.log(rta.data)
     } catch (error) {
       this.mensajeError = "No se pudo obtener los datos ";
       console.log(error.error);
