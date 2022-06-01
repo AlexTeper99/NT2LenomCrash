@@ -40,17 +40,6 @@ app.post('/api/monedas/setmoneda', (req,res) => {
   monedas.push(req.body);
   res.json(monedas);
 })
-/*
-app.delete('/api/monedas/:ticker', (req,res) => {
-  // ELIMINAR EN BASE DE DATOS
-  const ticker = req.params.ticker;
-  const index = monedas.findIndex(m => m.ticker == ticker);
-  if (index > -1) {
-    monedas.splice(index,1);
-  };
-  res.json(monedas);
-})
-*/
 
 app.delete('/api/monedas/:ticker', (req,res) => {
   console.log(req.params.ticker);
@@ -64,28 +53,8 @@ app.put('/api/monedas', (req,res) => {
 })
 
 
-/*
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.post('/api/setvendedor', (req,res) => {
-  req.body.codigo = Number(req.body.codigo)
-  lista.push(req.body);
-})
-
-app.delete('/api/vendedor/:codigo', (req,res) => {
-  const listaCodigos = lista.map( e => { return e.codigo } )
-  const indice = listaCodigos.indexOf(Number(req.params.codigo))
-  lista.splice(indice,1);
-})
-
-app.post('/api/setvendedor', (req,res) => {
-  // revisar
-})
 
 
- */
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

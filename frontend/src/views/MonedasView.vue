@@ -4,25 +4,35 @@
 
     <li v-for="moneda in monedas" :key="moneda.ticker">
       {{ moneda.ticker }} - {{ moneda.nombre}} - ${{moneda.precio}}
-      <button @click="eliminar(moneda.ticker)">Eliminar</button>
-      <button @click="prepararModificar(moneda)">Modificar</button>
+      <button @click="eliminar(moneda.ticker)" v-if="eliminando">Eliminar</button>
+      <button @click="modificarPrecio(moneda, precioNuevo)" v-if="modificando">Modificar</button>
     </li>
 
-    <p>
+    <div>
+      <br>
+      <button @click="agregandoMoneda()">Agregar Moneda</button>
+      <button @click="modificandoMoneda()">Modificar Precio</button>
+      <button @click="eliminandoMoneda()">Eliminar Moneda</button>
+    </div>
+
+
+
+    
+      <div v-if="agregando">
+      
       Ticker <input type="text" v-model="moneda.ticker" id="tickerLabel"/>
       <br>
       Nombre <input type="text" v-model="moneda.nombre" id="nombreLabel"/>
       <br>
       Precio <input type="text" v-model="moneda.precio" id="precioLabel"/>
       <br>
-    </p>
-      <button @click="agregar">Agregar moneda</button>
+      </div>
+    
+      <button @click="agregar" v-if="agregando">Agregar moneda</button>
 
-      <div v-if="visible">
-      <br>
-      Precio <input type="text" v-model="moneda.precio" id="nuevoPrecioLabel"/> 
-      <button @click="modificarPrecio(moneda, precioNuevo)">Modificar Precio</button>
-      <br>
+      <div v-if="modificando">
+      Nuevo Precio <input type="text" v-model="moneda.precio" id="nuevoPrecioLabel"/>
+      <br> 
       </div>
     
   
@@ -48,6 +58,9 @@ export default {
       moneda: {ticker: '', nombre: '', precio: 0},
       mensajeError: '',
       visible: true,
+      agregando: false,
+      modificando: false,
+      eliminando: false,
     };
   },
   created: async function () {
@@ -93,7 +106,34 @@ export default {
 
     modificarPrecio(monedaRecibida, nuevoPrecio) {
       
+    },
+
+    agregandoMoneda() {
+      if(this.agregando == true) {
+        this.agregando = false;
+      } else {
+        this.agregando = true;
+      }
+    },
+
+    modificandoMoneda() {
+      if(this.modificando == true) {
+        this.modificando = false;
+      } else {
+        this.modificando = true;
+      }
+    },
+
+    eliminandoMoneda(){
+      if(this.eliminando == true) {
+        this.eliminando = false;
+      } else {
+        this.eliminando = true;
+      }
+
     }
+
+
 
   },
 };
