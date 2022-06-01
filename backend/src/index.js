@@ -26,12 +26,43 @@ app.post('/api/login', (req,res) => {
 // simulo una base de datos en memoria
 // vendedores
 
-const monedas = [{ticker:"BTC",nombre:"Bitcoin"},{ticker:"ETH",nombre:"Ethereum"}];
+const monedas = [{ticker:"BTC",nombre:"Bitcoin",precio: 30000.0},{ticker:"ETH",nombre:"Ethereum",precio: 2500.0},{ticker:"LTC",nombre:"Litecoin",precio: 68.0},
+{ticker:"XRP",nombre:"Ripple",precio: 0.25},{ticker:"ADA",nombre:"Cardano",precio: 0.1},{ticker:"USDT",nombre:"Tether",precio: 1.0}];
 
 app.get('/api/monedas', (req,res) => {
   // CONSULTA A BASE DE DATOS
   res.json(monedas);
 })
+
+app.post('/api/monedas/setmoneda', (req,res) => {
+  // INSERTAR EN BASE DE DATOS
+  monedas.push(req.body);
+  res.json(monedas);
+})
+/*
+app.delete('/api/monedas/:ticker', (req,res) => {
+  // ELIMINAR EN BASE DE DATOS
+  const ticker = req.params.ticker;
+  const index = monedas.findIndex(m => m.ticker == ticker);
+  if (index > -1) {
+    monedas.splice(index,1);
+  };
+  res.json(monedas);
+})
+*/
+
+app.delete('/api/monedas/:ticker', (req,res) => {
+  const listaMonedas = monedas.map( e => { return e.ticker } )
+  const indice = listaMonedas.indexOf(m.ticker == req.params.ticker);
+  lista.splice(indice,1);
+})
+
+app.put('/api/monedas', (req,res) => {
+  // MODIFICAR EN BASE DE DATOS
+  monedas.push(req.body);
+  res.json(monedas);
+})
+
 
 /*
 app.get('/', (req, res) => {

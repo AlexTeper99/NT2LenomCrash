@@ -18,17 +18,17 @@ const apiClient = axios.create({
 })
 
 export default {
-    getVendedores() {
-        return apiClient.get('/api/lista');
+    getMonedas() {
+        return apiClient.get('/api/monedas');
     },
-    setVendedor(vendedor) {
-        return apiClient.post('/api/setvendedor', vendedor);
+    setMoneda(moneda) {
+        return apiClient.post('/api/setmoneda', moneda);
     },
-    deleteVendedor(codigo) {
-        return apiClient.delete('/api/vendedor/' + codigo);
+    deleteMoneda(ticker) {
+        return apiClient.delete('/api/monedas/' + ticker);
     },
-    modificarVendedor(vendedor) {
+    modificarMoneda(moneda) {
         // chequear
-        return apiClient.put('/api/setvendedor', vendedor)
+        return apiClient.put('/api/setmoneda', moneda);
     }
 }
