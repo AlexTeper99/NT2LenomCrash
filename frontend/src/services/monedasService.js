@@ -22,13 +22,13 @@ export default {
         return apiClient.get('/api/monedas');
     },
     setMoneda(moneda) {
-        return apiClient.post('/api/setmoneda', moneda);
+        return apiClient.post('/api/monedas/setmoneda', moneda);
     },
     deleteMoneda(ticker) {
         return apiClient.delete('/api/monedas/' + ticker);
     },
     modificarMoneda(moneda) {
         // chequear
-        return apiClient.put('/api/setmoneda', moneda);
+        return apiClient.put('/api/monedas/setmoneda', moneda);
     }
 }
