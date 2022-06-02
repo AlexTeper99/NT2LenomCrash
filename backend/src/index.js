@@ -1,6 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import e from 'express'
 
 const app = express()
 app.use(bodyParser.json())
@@ -36,19 +37,28 @@ app.get('/api/monedas', (req,res) => {
 
 app.post('/api/monedas/setmoneda', (req,res) => {
   // INSERTAR EN BASE DE DATOS
-  console.log(req.body);
   monedas.push(req.body);
   res.json(monedas);
 })
 
 app.delete('/api/monedas/:ticker', (req,res) => {
-  console.log(req.params.ticker);
   monedas = monedas.filter(elto => elto.ticker !== req.params.ticker);
+  res.json(monedas);
 })
 
-app.put('/api/monedas', (req,res) => {
+app.post('/api/monedas/modificarmoneda', (req,res) => {
   // MODIFICAR EN BASE DE DATOS
-  monedas.push(req.body);
+  console.log(req.body);
+  
+  /*
+  monedas = monedas.map((monedaActual) => {
+    
+    console.log(monedaActual.ticker);
+    if (monedaActual.ticker.localeCompare(req.body.ticker)) {
+     monedaActual.precio = req.body.precio;
+    }
+  });
+  */
   res.json(monedas);
 })
 

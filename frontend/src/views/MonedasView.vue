@@ -5,13 +5,13 @@
     <li v-for="moneda in monedas" :key="moneda.ticker">
       {{ moneda.ticker }} - {{ moneda.nombre}} - ${{moneda.precio}}
       <button @click="eliminar(moneda.ticker)" v-if="eliminando">Eliminar</button>
-      <button @click="modificarPrecio(moneda, precioNuevo)" v-if="modificando">Modificar</button>
+      <button @click="editarPrecio(moneda)" v-if="editando">Editar</button>
     </li>
 
     <div>
       <br>
       <button @click="agregandoMoneda()">Agregar Moneda</button>
-      <button @click="modificandoMoneda()">Modificar Precio</button>
+      <button @click="editandoMoneda()">Modificar Precio</button>
       <button @click="eliminandoMoneda()">Eliminar Moneda</button>
     </div>
 
@@ -31,7 +31,8 @@
       <button @click="agregar" v-if="agregando">Agregar moneda</button>
 
       <div v-if="modificando">
-      Nuevo Precio <input type="text" v-model="moneda.precio" id="nuevoPrecioLabel"/>
+      {{monedaEdit.nombre}} <input type="text" id="nuevoPrecioLabel" v-model="precioNuevo"/>
+      <button @click="actualizar">Actualizar</button>
       <br> 
       </div>
     
@@ -56,11 +57,14 @@ export default {
     return {
       monedas: [],
       moneda: {ticker: '', nombre: '', precio: 0},
+      monedaEdit: {ticker: '', nombre: '', precio: 0},
       mensajeError: '',
       visible: true,
       agregando: false,
       modificando: false,
       eliminando: false,
+      editando: false,
+      precioNuevo: 0,
     };
   },
   created: async function () {
@@ -104,8 +108,12 @@ export default {
       this.visible = true;
     },
 
-    modificarPrecio(monedaRecibida, nuevoPrecio) {
-      
+    editarPrecio(monedaRecibida) {
+      this.precioNuevo = monedaRecibida.precio;
+      this.modificando = true;
+      this.monedaEdit = monedaRecibida;
+
+
     },
 
     agregandoMoneda() {
@@ -116,11 +124,11 @@ export default {
       }
     },
 
-    modificandoMoneda() {
-      if(this.modificando == true) {
-        this.modificando = false;
+    editandoMoneda() {
+      if(this.editando == true) {
+        this.editando = false;
       } else {
-        this.modificando = true;
+        this.editando = true;
       }
     },
 
@@ -131,9 +139,21 @@ export default {
         this.eliminando = true;
       }
 
-    }
+    },
 
-
+    async actualizar() {
+      try {
+        this.modificando = false;
+      this.monedaEdit.precio = this.precioNuevo;
+      monedasService.modificarMoneda(this.monedaEdit);
+      } catch (error) {
+        this.mensajeError = "No se pudo obtener los datos ";
+        console.log(error.error);
+      }
+      
+      
+    },
+    
 
   },
 };

@@ -29,6 +29,6 @@ export default {
     },
     modificarMoneda(moneda) {
         // chequear
-        return apiClient.put('/api/monedas/setmoneda', moneda);
+        return apiClient.post('/api/monedas/modificarmoneda', moneda);
     }
 }
