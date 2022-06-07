@@ -82,6 +82,8 @@ export default {
         const obj = {...this.moneda};
         monedasService.setMoneda(obj); 
         this.monedas.push(obj);
+        this.agregando = false;
+        
       } catch (error) {
         this.mensajeError = "No se pudo obtener los datos ";
         console.log(error.error);
@@ -93,10 +95,7 @@ export default {
       // codigo pasado por Santiago, para revisar, como opcion
       this.monedas = this.monedas.filter(elto => elto.ticker != tickerBorrar);
       monedasService.deleteMoneda(tickerBorrar);
-      //this.monedas = await monedasService.getMonedas;
-
-      
-
+      this.eliminando = false;
       } catch (error) {
         this.mensajeError = "No se pudo obtener los datos ";
         console.log(error.error);
@@ -112,7 +111,7 @@ export default {
       this.precioNuevo = monedaRecibida.precio;
       this.modificando = true;
       this.monedaEdit = monedaRecibida;
-
+      
 
     },
 
@@ -146,9 +145,13 @@ export default {
         this.modificando = false;
       this.monedaEdit.precio = this.precioNuevo;
       monedasService.modificarMoneda(this.monedaEdit);
+      this.modificando = false;
+      this.editando = false;
       } catch (error) {
         this.mensajeError = "No se pudo obtener los datos ";
         console.log(error.error);
+        
+        
       }
       
       

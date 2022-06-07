@@ -45,7 +45,7 @@ app.delete('/api/monedas/:ticker', (req,res) => {
   res.json(monedas);
 })
 
-app.post('/api/monedas/modificarmoneda', (req,res) => {
+app.put('/api/monedas/modificarmoneda', (req,res) => {
   // MODIFICAR EN BASE DE DATOS
   console.log(req.body);
 
@@ -113,4 +113,32 @@ app.get('/api/getWalletById/:id', (req, res) => {
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
+})
+
+
+// usuarios ---------------------------------------------------------------------------/
+
+const usuarios = [{id: 1, nombre: "Alejo", apellido: "Curello", email: "asd@gmail.com", password: "123456", listawallet: [1,2,3] }, 
+                  {id: 2, nombre: "Santiago", apellido: "SantaMaria", email: "SS@gmail.com", password: "123456", listawallet: [1,3] }];
+
+
+
+app.get('/api/usuarios', (req,res) => {
+  // CONSULTA A BASE DE DATOS
+  res.json(usuarios);
+})
+
+app.post('/api/usuarios/setusuario', (req,res) => {
+    usuarios.push(req.body);
+    res.json(usuarios);
+})
+
+app.delete('/api/usuarios/:id', (req,res) => {
+    usuarios = usuarios.filter(elto => elto.ticker !== req.params.id);
+    res.json(usuarios);
+})
+
+
+app.post('/api/usuarios', (req,res) => {
+  // revisar
 })

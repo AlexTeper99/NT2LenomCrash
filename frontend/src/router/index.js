@@ -31,6 +31,11 @@ const router = createRouter({
             path: '/wallets',
             name: 'wallets',
             component: WalletListView
+        },
+        {
+            path: '/usuarios',
+            name: 'usuarios',
+            component: usuariosView
         }
     ]
 })
