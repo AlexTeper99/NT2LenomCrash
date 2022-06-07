@@ -9,29 +9,79 @@ const port = 3001
 
 // sistema prototipo
 
-app.post('/api/login', (req,res) => {
+app.post('/api/login', (req, res) => {
 
-  // simulo traer un usuario de la base de datos
-  // este prototipo es monousuario para este ejemplo
-  console.log(req.body);
-  const usuario = { email : 'test@test.com' , password : '123456'};
-  if ( req.body && req.body.email == usuario.email && req.body.password == usuario.password ) {
-    res.sendStatus(200);
-  } else {
-    res.sendStatus(400);
-  }
+    // simulo traer un usuario de la base de datos
+    // este prototipo es monousuario para este ejemplo
+    console.log(req.body);
+    const usuario = { email: 'test@test.com', password: '123456' };
+    if (req.body && req.body.email == usuario.email && req.body.password == usuario.password) {
+        res.sendStatus(200);
+    } else {
+        res.sendStatus(400);
+    }
 })
 
 
 // simulo una base de datos en memoria
-// vendedores
+// monedas
 
-const monedas = [{ticker:"BTC",nombre:"Bitcoin"},{ticker:"ETH",nombre:"Ethereum"}];
+const monedas = [{ ticker: "BTC", nombre: "Bitcoin" }, { ticker: "ETH", nombre: "Ethereum" }];
 
-app.get('/api/monedas', (req,res) => {
-  // CONSULTA A BASE DE DATOS
-  res.json(monedas);
+app.get('/api/monedas', (req, res) => {
+    // CONSULTA A BASE DE DATOS
+    res.json(monedas);
 })
+
+// ---------------------- Wallets ---------------------
+
+const wallets = [{
+        id: 1,
+        coins: [{
+            id: 1,
+            ticker: "BTC",
+            cantidad: 23
+        }, {
+            ticker: "USDT",
+            cantidad: 900
+        }],
+    },
+    {
+        id: 2,
+        coins: [{
+                id: 2,
+                ticker: "ETH",
+                cantidad: 5
+            },
+            {
+                ticker: "ADA",
+                cantidad: 9
+            },
+        ],
+    },
+    {
+        id: 3,
+        coins: [{
+                id: 3,
+                ticker: "LTC",
+                cantidad: 78
+            },
+            {
+                ticker: "ETH",
+                cantidad: 1
+            },
+        ],
+    },
+];
+
+app.get('/api/wallets', (req, res) => {
+    res.json(wallets);
+})
+
+app.get('/api/getWalletById/:id', (req, res) => {
+    res.json(wallets.filter(wallets => wallets.id == Number(req.params.id)));
+})
+
 
 /*
 app.get('/', (req, res) => {
@@ -57,5 +107,5 @@ app.post('/api/setvendedor', (req,res) => {
  */
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port ${port}`)
 })
