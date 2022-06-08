@@ -3,9 +3,6 @@
   <div>
     <h2>Wallet Unica</h2>
 
-
-
-
     {{this.wallet}}
 
   </div>
