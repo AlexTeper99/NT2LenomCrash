@@ -11,7 +11,7 @@ const apiClient = axios.create({
 
 export default {
     getSingleWallet(id) {
-        return apiClient.get('/api/getWalletById/:id');
+        return apiClient.get('/api/getWalletById/' + id);
     },
     createWallet() {
         return apiClient.post('/api/createwallet');

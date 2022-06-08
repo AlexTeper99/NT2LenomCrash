@@ -2,29 +2,43 @@
 <template>
   <div>
     <h2>Wallet Unica</h2>
-    {{ $route.params }}
+
+
+
+
+    {{this.wallet}}
+
   </div>
+
+
 </template>
 
 <script>
+import {useRoute} from "vue-router"
 import singleWalletService from "../services/singleWalletService.js"
 export default {
   data() {
     return {
       listaCoins: [],
-      wallet: { id: 0, ticker: "", cantidad: 0 },
+      wallet: {},
       mensajeError: "",
+      idWallet: 0,
+      walletCargada: false
     };
     },
   created: async function () {
     try {
+      console.log('entre al created')
 
-        const res = await singleWalletService.getWallets();
-        this.listaWallets = res.data;
+      this.idWallet = this.$route.params.id;
+
+      this.wallet = await singleWalletService.getSingleWallet(this.idWallet);
+      this.wallet = this.wallet.data;
+
     
     } catch (error) {
         this.mensajeError = "No se pudo obtener los datos";
-        console.log(error.error);
+        //console.log(error.error);
     }
   },
   methods: {
@@ -34,6 +48,21 @@ export default {
         console.log(id);
     
 
+    },
+
+
+   async beforeRouteUpdate(to, from) {
+  // react to route changes...
+    let userData = await (to.params.id)
+     console.log('userData ' + userData)
+  },
+
+
+    async setup(){
+
+        this.wallet = await singleWalletService.getSingleWallet(this.idWallet);
+        console.log(this.wallet)
+        return true;
     }
     },
 };

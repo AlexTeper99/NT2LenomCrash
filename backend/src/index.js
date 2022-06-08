@@ -24,7 +24,7 @@ app.post('/api/login', (req, res) => {
 
 
 // simulo una base de datos en memoria
-// monedas
+//---------------------------- monedas -------------------------------------------
 
 let monedas = [{ ticker: "BTC", nombre: "Bitcoin", precio: 30000.0 }, { ticker: "ETH", nombre: "Ethereum", precio: 2500.0 }, { ticker: "LTC", nombre: "Litecoin", precio: 68.0 },
     { ticker: "XRP", nombre: "Ripple", precio: 0.25 }, { ticker: "ADA", nombre: "Cardano", precio: 0.1 }, { ticker: "USDT", nombre: "Tether", precio: 1.0 }
@@ -66,43 +66,11 @@ app.get('/api/monedas/:ticker', (req, res) => {
 
 // ---------------------- Wallets ---------------------
 
-const wallets = [{
-        id: 1,
-        coins: [{
-            id: 1,
-            ticker: "BTC",
-            cantidad: 23
-        }, {
-            ticker: "USDT",
-            cantidad: 900
-        }],
-    },
-    {
-        id: 2,
-        coins: [{
-                id: 2,
-                ticker: "ETH",
-                cantidad: 5
-            },
-            {
-                ticker: "ADA",
-                cantidad: 9
-            },
-        ],
-    },
-    {
-        id: 3,
-        coins: [{
-                id: 3,
-                ticker: "LTC",
-                cantidad: 78
-            },
-            {
-                ticker: "ETH",
-                cantidad: 1
-            },
-        ],
-    },
+const wallets = [
+    {id: 1, coin: monedas[0], cantidad: 0, userId: 1 },
+    {id: 2, coin: monedas[1], cantidad: 0, userId: 1 },
+    {id: 3, coin: monedas[2], cantidad: 0, userId: 1 },
+    {id: 4, coin: monedas[0], cantidad: 0, userId: 2 }
 ];
 
 app.get('/api/wallets', (req, res) => {
@@ -110,9 +78,8 @@ app.get('/api/wallets', (req, res) => {
 })
 
 app.get('/api/getWalletById/:id', (req, res) => {
-    res.json(wallets.filter(wallets => wallets.id === Number(req.params.id)));
+    res.json(wallets.find(wallets => wallets.id === Number(req.params.id)));
 })
-
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
