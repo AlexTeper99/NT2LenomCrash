@@ -41,26 +41,10 @@ export default {
   methods: {
     
     eliminar(id) {
-
         console.log(id);
-    
-
     },
 
 
-   async beforeRouteUpdate(to, from) {
-  // react to route changes...
-    let userData = await (to.params.id)
-     console.log('userData ' + userData)
-  },
-
-
-    async setup(){
-
-        this.wallet = await singleWalletService.getSingleWallet(this.idWallet);
-        console.log(this.wallet)
-        return true;
-    }
     },
 };
 </script>
