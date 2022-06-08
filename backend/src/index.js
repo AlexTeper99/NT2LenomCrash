@@ -26,39 +26,37 @@ app.post('/api/login', (req, res) => {
 // simulo una base de datos en memoria
 // monedas
 
-let monedas = [{ticker:"BTC",nombre:"Bitcoin",precio: 30000.0},{ticker:"ETH",nombre:"Ethereum",precio: 2500.0},{ticker:"LTC",nombre:"Litecoin",precio: 68.0},
-{ticker:"XRP",nombre:"Ripple",precio: 0.25},{ticker:"ADA",nombre:"Cardano",precio: 0.1},{ticker:"USDT",nombre:"Tether",precio: 1.0}];
+let monedas = [{ ticker: "BTC", nombre: "Bitcoin", precio: 30000.0 }, { ticker: "ETH", nombre: "Ethereum", precio: 2500.0 }, { ticker: "LTC", nombre: "Litecoin", precio: 68.0 },
+    { ticker: "XRP", nombre: "Ripple", precio: 0.25 }, { ticker: "ADA", nombre: "Cardano", precio: 0.1 }, { ticker: "USDT", nombre: "Tether", precio: 1.0 }
+];
 
 app.get('/api/monedas', (req, res) => {
     // CONSULTA A BASE DE DATOS
     res.json(monedas);
 })
 
-app.post('/api/monedas/setmoneda', (req,res) => {
-  // INSERTAR EN BASE DE DATOS
-  monedas.push(req.body);
-  res.json(monedas);
+app.post('/api/monedas/setmoneda', (req, res) => {
+    // INSERTAR EN BASE DE DATOS
+    monedas.push(req.body);
+    res.json(monedas);
 })
 
-app.delete('/api/monedas/:ticker', (req,res) => {
-  monedas = monedas.filter(elto => elto.ticker !== req.params.ticker);
-  res.json(monedas);
+app.delete('/api/monedas/:ticker', (req, res) => {
+    monedas = monedas.filter(elto => elto.ticker !== req.params.ticker);
+    res.json(monedas);
 })
 
-app.post('/api/monedas/modificarmoneda', (req,res) => {
-  // MODIFICAR EN BASE DE DATOS
-  console.log(req.body);
+app.post('/api/monedas/modificarmoneda', (req, res) => {
 
-  /*
-  monedas = monedas.map((monedaActual) => {
+    let ticker = req.body.ticker;
+    let mbuscada = monedas.find(moneda => moneda.ticker === ticker);
 
-    console.log(monedaActual.ticker);
-    if (monedaActual.ticker.localeCompare(req.body.ticker)) {
-     monedaActual.precio = req.body.precio;
-    }
-  });
-  */
-  res.json(monedas);
+    console.log(mbuscada);
+
+    mbuscada.precio = req.body.precio;
+
+
+    res.json(monedas);
 })
 
 // ---------------------- Wallets ---------------------

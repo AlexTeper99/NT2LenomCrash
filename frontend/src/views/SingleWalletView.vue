@@ -1,7 +1,8 @@
 
 <template>
   <div>
-    <h2>Wallet</h2>
+    <h2>Wallet Unica</h2>
+    {{ $route.params }}
   </div>
 </template>
 
@@ -27,33 +28,11 @@ export default {
     }
   },
   methods: {
-    // agregar() {
-    //   try {
-    //     const obj = {...this.vendedor};
-    //     vendedorService.setVendedor(obj); 
-    //     this.lista.push(obj);
-    //   } catch (error) {
-    //     this.mensajeError = "No se pudo obtener los datos ";
-    //     console.log(error.error);
-    //   }
-    // },
+    
     eliminar(id) {
 
         console.log(id);
-    //   try {
-
-        
-    //     // this.productos = this.productos.filter(elto => elto.id != idBorrar);
-
-    //     vendedorService.deleteVendedor(codigo);
-    //     const listaCodigos = this.lista.map( e => { return e.codigo } )
-    //     const indice = listaCodigos.indexOf(codigo)
-    //     this.lista.splice(indice,1);
-
-    //   } catch (error) {
-    //     this.mensajeError = "No se pudo obtener los datos ";
-    //     console.log(error.error);
-    //   }
+    
 
     }
     },

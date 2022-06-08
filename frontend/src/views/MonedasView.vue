@@ -144,8 +144,8 @@ export default {
     async actualizar() {
       try {
         this.modificando = false;
-      this.monedaEdit.precio = this.precioNuevo;
-      monedasService.modificarMoneda(this.monedaEdit);
+        this.monedaEdit.precio = this.precioNuevo;
+        monedasService.modificarMoneda({...this.monedaEdit});
       } catch (error) {
         this.mensajeError = "No se pudo obtener los datos ";
         console.log(error.error);

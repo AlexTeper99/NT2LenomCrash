@@ -31,7 +31,13 @@ const router = createRouter({
             path: '/wallets',
             name: 'wallets',
             component: WalletListView
+        },
+        {
+            path: '/singlewallet/:id',
+            name: 'singlewallet',
+            component: SingleWalletView
         }
+
     ]
 })
 
