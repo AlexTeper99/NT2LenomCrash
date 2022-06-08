@@ -51,9 +51,17 @@ app.post('/api/monedas/modificarmoneda', (req, res) => {
     let ticker = req.body.ticker;
     let mbuscada = monedas.find(moneda => moneda.ticker === ticker);
 
+    console.log(mbuscada);
+
     mbuscada.precio = req.body.precio;
 
     res.json(monedas);
+})
+
+app.get('/api/monedas/:ticker', (req, res) => {
+    let ticker = req.params.ticker;
+    let mbuscada = monedas.find(moneda => moneda.ticker === ticker);
+    res.json(mbuscada);
 })
 
 // ---------------------- Wallets ---------------------
