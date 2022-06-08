@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import MonedaView from "../views/MonedasView.vue";
 import WalletListView from "../views/WalletListView.vue";
 import SingleWalletView from "../views/SingleWalletView.vue";
+import LoginView from "../views/LoginView.vue";
 
 
 const router = createRouter({
@@ -33,7 +34,9 @@ const router = createRouter({
             component: WalletListView
         },
         {
-            
+            path: '/usuarios',
+            name: 'usuarios',
+            component: LoginView
         }
 
     ]
