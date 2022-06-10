@@ -26,12 +26,14 @@
         Datos de Nueva Moneda:
         <br />
         <div class="inputs-align">
+          <p> Nombre </p>
+          <input class="input-coin" type="text" v-model="moneda.nombre" id="nombreLabel"/>
+          <br>
+          
           <p> Ticker </p>
           <input class="input-coin" type="text" v-model="moneda.ticker" id="tickerLabel"/>
           <br>
-          <p> Ticker </p>
-          <input class="input-coin" type="text" v-model="moneda.nombre" id="nombreLabel"/>
-          <br>
+          
           <p> Precio (USD) </p>
           <input class="input-coin" type="text" v-model="moneda.precio" id="precioLabel"/>
           <br>
