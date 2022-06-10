@@ -4,7 +4,8 @@
     <h2>Mis Wallets</h2>
     <br/>
     <div v-for="wallet in listaWallets" :key="wallet.id">
-      <button @click="editarWallet(wallet.id)">Editar Wallet {{wallet.id}}</button>
+      <br/>
+      <button class="button-4" role="button" @click="editarWallet(wallet.id)">Editar Wallet {{wallet.id}}</button>
       
       <p v-for="coin in wallet.coins" :key="coin.id">
         Moneda : {{ coin.ticker }} | Cantidad : {{ coin.cantidad }}

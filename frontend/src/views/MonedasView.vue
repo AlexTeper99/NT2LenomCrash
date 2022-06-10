@@ -1,38 +1,50 @@
 <template>
   <div>
     <h2>Monedas</h2>
-
-    <li v-for="moneda in monedas" :key="moneda.ticker">
+    <div>
+    <li class="coin-list" v-for="moneda in monedas" :key="moneda.ticker">
       {{ moneda.ticker }} - {{ moneda.nombre}} - ${{moneda.precio}}
-      <button @click="eliminar(moneda.ticker)" v-if="eliminando">Eliminar</button>
-      <button @click="editarPrecio(moneda)" v-if="editando">Editar</button>
+      <button class="button-3 danger" role="button" @click="eliminar(moneda.ticker)" v-if="eliminando">Eliminar</button>
+      
+      <button class="button-4" role="button" @click="editarPrecio(moneda)" v-if="editando">Editar</button>
+    
     </li>
+    </div>
 
     <div>
       <br>
-      <button @click="agregandoMoneda()">Agregar Moneda</button>
-      <button @click="editandoMoneda()">Modificar Precio</button>
-      <button @click="eliminandoMoneda()">Eliminar Moneda</button>
+      <button class="button-3" role="button" @click="agregandoMoneda()">Agregar Moneda</button> | 
+      <button class="button-3" role="button" @click="editandoMoneda()">Modificar Precio</button> |
+      <button class="button-3 danger" role="button" @click="eliminandoMoneda()">Eliminar Moneda</button>
     </div>
 
 
 
     
-      <div v-if="agregando">
+      <div class="new-coin-div" v-if="agregando">
       
-      Ticker <input type="text" v-model="moneda.ticker" id="tickerLabel"/>
-      <br>
-      Nombre <input type="text" v-model="moneda.nombre" id="nombreLabel"/>
-      <br>
-      Precio <input type="text" v-model="moneda.precio" id="precioLabel"/>
-      <br>
+        Datos de Nueva Moneda:
+        <br />
+        <div class="inputs-align">
+          <p> Ticker </p>
+          <input class="input-coin" type="text" v-model="moneda.ticker" id="tickerLabel"/>
+          <br>
+          <p> Ticker </p>
+          <input class="input-coin" type="text" v-model="moneda.nombre" id="nombreLabel"/>
+          <br>
+          <p> Precio (USD) </p>
+          <input class="input-coin" type="text" v-model="moneda.precio" id="precioLabel"/>
+          <br>
+        </div>
       </div>
-    
-      <button @click="agregar" v-if="agregando">Agregar moneda</button>
+      <br/>
+      <button class="button-3" role="button" @click="agregar" v-if="agregando">Agregar Nueva Moneda -></button>
 
       <div v-if="modificando">
-      {{monedaEdit.nombre}} <input type="text" id="nuevoPrecioLabel" v-model="precioNuevo"/>
-      <button @click="actualizar">Actualizar</button>
+      <p>{{ monedaEdit.nombre }} </p>
+      Precio Nuevo: <input class="input-coin input-sm" type="text" id="nuevoPrecioLabel" v-model="precioNuevo"/>
+      
+      | <button class="button-3" role="button" @click="actualizar">Actualizar</button>
       <br> 
       </div>
     
