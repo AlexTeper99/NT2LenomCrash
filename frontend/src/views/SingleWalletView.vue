@@ -6,15 +6,15 @@
     <p>Wallet: {{ wallet.id }}</p>
     
     <br/> 
-    <p>Moneda: {{ coin.ticker }}</p>
-     Saldo en moneda:  {{ coin.cantidad }}
+    <p>Moneda: {{ wallet.coin.ticker }}</p>
+     Saldo en moneda:  {{ wallet.coin.cantidad }}
   </div> 
   <div class="unit-div single-wallet-select">
       
     <p>Editar Wallet </p>
       <p>
-        Ticker: <input class="input-coin" type="text" v-model="wallet.coin.ticker" id="tickerLabel"/>  
-        Cantidad: <input class="input-coin" type="text" v-model="wallet.coin.cantidad" id="cantidadLabel"/>
+        Ticker: <input class="input-coin" type="text" v-model="coinEdit.ticker" id="tickerLabel"/>  
+        Cantidad: <input class="input-coin" type="text" v-model="coinEdit.cantidad" id="cantidadLabel"/>
       </p>
         <br/>  
       <button class="button-3" role="button" @click="guardarWallet()">Guardar Cambios</button>
@@ -39,7 +39,7 @@ import singleWalletService from "../services/singleWalletService.js"
 export default {
   data() {
     return {
-      coin: {},
+      coinEdit: {},
       wallet: {},
       mensajeError: "",
       walletCargada: false
@@ -51,7 +51,7 @@ export default {
       let walletId = this.$route.params.id;
       let wallet = await singleWalletService.getSingleWallet(walletId);
       this.wallet = wallet.data;
-      this.coin = wallet.data.coin;
+      this.coinEdit = { ... wallet.data.coin };
       
     
     } catch (error) {
@@ -65,6 +65,8 @@ export default {
       let wallet = await singleWalletService.getSingleWallet(walletId);
     },
     async guardarWallet() {
+      let coin = {... this.coinEdit};
+      this.wallet.coin = coin;
       let updatedWallet = {... this.wallet };
       await singleWalletService.modificarWallet(updatedWallet);
     },
