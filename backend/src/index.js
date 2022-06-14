@@ -66,42 +66,30 @@ app.get('/api/monedas/:ticker', (req, res) => {
 
 // ---------------------- Wallets ---------------------
 
-const wallets = [{
+let wallets = [{
         id: 1,
-        coins: [{
+        coin: {
             id: 1,
             ticker: "BTC",
             cantidad: 23
-        }, {
-            ticker: "USDT",
-            cantidad: 900
-        }],
+        },
     },
     {
         id: 2,
-        coins: [{
-                id: 2,
-                ticker: "ETH",
-                cantidad: 5
-            },
-            {
-                ticker: "ADA",
-                cantidad: 9
-            },
-        ],
+        coin: {
+            id: 2,
+            ticker: "ETH",
+            cantidad: 5
+        },
     },
     {
         id: 3,
-        coins: [{
-                id: 3,
-                ticker: "LTC",
-                cantidad: 78
-            },
-            {
-                ticker: "ETH",
-                cantidad: 1
-            },
-        ],
+        coin: {
+            id: 3,
+            ticker: "LTC",
+            cantidad: 78
+        },
+
     },
 ];
 
@@ -110,8 +98,17 @@ app.get('/api/wallets', (req, res) => {
 })
 
 app.get('/api/getWalletById/:id', (req, res) => {
-    res.json(wallets.filter(wallets => wallets.id === Number(req.params.id)));
+    let wallet = wallets.find(wallet => wallet.id === Number(req.params.id));
+    res.json(wallet);
 })
+
+app.put('/api/updatewallet', (req) => {
+    let newWallet = req.body;
+    let wallet = wallets.find(wallet => wallet.id === Number(newWallet.id));
+    wallet.coin.cantidad = newWallet.coin.cantidad;
+    wallet.coin.ticker = newWallet.coin.ticker;
+
+});
 
 
 app.listen(port, () => {

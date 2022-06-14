@@ -7,13 +7,14 @@
       <br/>
       <button class="button-4" role="button" @click="editarWallet(wallet.id)">Editar Wallet {{wallet.id}}</button>
       
-      <p v-for="coin in wallet.coins" :key="coin.id">
-        Moneda : {{ coin.ticker }} | Cantidad : {{ coin.cantidad }}
+      <p>
+        Moneda : {{ wallet.coin.ticker }} | Cantidad : {{ wallet.coin.cantidad }}
       </p>
       
-      <br/>
+    
       _______________________________________________
-      <br/>
+
+
     </div>
   </div>
   
@@ -31,19 +32,13 @@ export default {
       listaWallets: [],
       wallet: {
         id: null,
-        coins: [{
+        coin: {
           id:null,
+          ticker:null,
           cantidad:null
-        }],
+        },
       },
       mensajeError: "",
-      selectedWallet: {
-        id: null,
-        coins: [{
-          id:null,
-          cantidad:null
-        }],
-      },
       hasWallet: false
     };
     },

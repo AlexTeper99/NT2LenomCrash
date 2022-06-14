@@ -131,7 +131,7 @@ body {
 }
 
 .input-coin {
-    margin-left: 2em;
+    margin-left: 1em;
     height: 2em;
     border: #181818 1px solid;
     border-radius: 5px;
@@ -209,4 +209,8 @@ body {
 
 .coin-list {
     padding-top: 1em;
+}
+
+.unit-div {
+    margin: 1em;
 }
