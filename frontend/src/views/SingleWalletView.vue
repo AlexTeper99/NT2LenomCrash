@@ -1,5 +1,6 @@
 <template>
-  <div class="unit-div">
+<div>
+  <div class="unit-div single-wallet-select">
     <h2>Wallet Unica</h2>
 
     <p>Wallet: {{ wallet.id }}</p>
@@ -8,9 +9,7 @@
     <p>Moneda: {{ coin.ticker }}</p>
      Saldo en moneda:  {{ coin.cantidad }}
   </div> 
-    <br/>
-    <br/>
-  <div class="unit-div">
+  <div class="unit-div single-wallet-select">
       
     <p>Editar Wallet </p>
       <p>
@@ -18,12 +17,20 @@
         Cantidad: <input class="input-coin" type="text" v-model="wallet.coin.cantidad" id="cantidadLabel"/>
       </p>
         <br/>  
-      <button class="button-4" role="button" @click="guardarWallet()">Guardar Cambios</button>
+      <button class="button-3" role="button" @click="guardarWallet()">Guardar Cambios</button>
   </div>
-
+  <div class="unit-div single-wallet-select">
+      
+    <p> - Eliminar Wallet - </p>
+      
+        <br/>  
+    
+    <button class="button-3 danger" role="button" @click="eliminarWallet()">Eliminar Wallet</button>
+  </div>
+  
   
 
-
+</div>
 </template>
 
 <script>
@@ -59,12 +66,14 @@ export default {
     },
     async guardarWallet() {
       let updatedWallet = {... this.wallet };
-      singleWalletService.modificarWallet(updatedWallet);
+      await singleWalletService.modificarWallet(updatedWallet);
     },
-    
-    
-    eliminar(id) {
-        console.log(id);
+    async eliminarWallet() {
+        let id = this.wallet.id;
+        await singleWalletService.deleteWallet(id).then(function() {
+          this.$router.push('/wallets');
+        });
+        
     },
     },
 };

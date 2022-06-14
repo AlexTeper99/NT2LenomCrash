@@ -111,6 +111,15 @@ app.put('/api/updatewallet', (req) => {
 });
 
 
+app.delete('/api/wallet/:id', (req, res) => {
+    let walletId = req.params.id;
+    console.log(walletId);
+    let index = wallets.map(wallet => { return wallet.id; }).indexOf(walletId);
+    wallets.splice(index, 1);
+
+});
+
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })

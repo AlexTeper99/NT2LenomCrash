@@ -214,3 +214,14 @@ body {
 .unit-div {
     margin: 1em;
 }
+
+.single-wallet-select {
+    padding: 1.2em;
+    background-color: #ededed;
+    border-radius: 10px;
+}
+
+ul,
+li {
+    list-style-type: none;
+}
