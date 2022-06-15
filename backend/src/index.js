@@ -112,8 +112,8 @@ app.listen(port, () => {
 
 // usuarios ---------------------------------------------------------------------------/
 
-const usuarios = [{id: 1, nombre: "Alejo", apellido: "Curello", email: "asd@gmail.com", password: "123456", listawallet: [1,2,3] },
-                  {id: 2, nombre: "Santiago", apellido: "SantaMaria", email: "SS@gmail.com", password: "123456", listawallet: [1,2,3] },
+const usuarios = [{id: 1, nombre: "Alejo", apellido: "Curello", email: "asd@gmail.com", password: "123456", listawallet: [1,2] },
+                  {id: 2, nombre: "Santiago", apellido: "SantaMaria", email: "SS@gmail.com", password: "123456", listawallet: [3] },
     {id: 3, nombre: "Admin", apellido: "Admin", email: "test@test.com", password: "123456", listawallet: []}
 ];
 
