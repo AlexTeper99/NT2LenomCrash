@@ -7,21 +7,6 @@ app.use(bodyParser.json())
 app.use(cors())
 const port = 3001
 
-// sistema prototipo
-
-app.post('/api/login', (req, res) => {
-
-    // simulo traer un usuario de la base de datos
-    // este prototipo es monousuario para este ejemplo
-    console.log(req.body);
-    const usuario = { email: 'test@test.com', password: '123456' };
-    if (req.body && req.body.email === usuario.email && req.body.password === usuario.password) {
-        res.sendStatus(200);
-    } else {
-        res.sendStatus(400);
-    }
-})
-
 
 // simulo una base de datos en memoria
 // monedas
@@ -119,26 +104,59 @@ app.listen(port, () => {
 // usuarios ---------------------------------------------------------------------------/
 
 const usuarios = [{id: 1, nombre: "Alejo", apellido: "Curello", email: "asd@gmail.com", password: "123456", listawallet: [1,2,3] }, 
-                  {id: 2, nombre: "Santiago", apellido: "SantaMaria", email: "SS@gmail.com", password: "123456", listawallet: [1,2,3] }];
+                  {id: 2, nombre: "Santiago", apellido: "SantaMaria", email: "SS@gmail.com", password: "123456", listawallet: [1,2,3] },
+
+];
+
+
+
+app.post('/api/login', (req,res) => {
+    console.log('entre al api/login')
+
+    try{
+        //METERLO EN UN IF o un try catch
+        let usuario = usuarios.find(user => user.email === req.body.email && user.password === req.body.password)
+        console.log(usuario)
+
+        let variable = req.body;
+        console.log(variable)
+
+        if ( req.body && req.body.email == usuario.email && req.body.password == usuario.password ) {
+            res.sendStatus(200);
+        } else {
+            res.sendStatus(400);
+        }
+    }catch(error){
+        console.log(error.error)
+        res.sendStatus(500);
+    }
+
+})
 
 
 
 app.get('/api/usuarios', (req,res) => {
-  // CONSULTA A BASE DE DATOS
   res.json(usuarios);
 })
 
-app.post('/api/usuarios/setusuario', (req,res) => {
-    usuarios.push(req.body);
-    res.json(usuarios);
+app.get('/api/getusuariosById/:id', (req, res) => {
+    let usuarioBuscado = usuarios.find(user => user.id === Number(req.params.id))
+    res.json(usuarioBuscado)
 })
+
+app.put('/api/usuarios/modificarcontrasenia', (req,res) => {
+    let nuevoUsuario = req.body;
+
+    let usuarioBuscado = usuarios.find(us => us.id === Number(req.params.id))
+
+    usuarioBuscado.password = nuevoUsuario.password;
+})
+
 
 app.delete('/api/usuarios/:id', (req,res) => {
-    usuarios = usuarios.filter(elto => elto.ticker !== req.params.id);
-    res.json(usuarios);
+   let userId = req.params.id;
+
+    let index = usuarios.map(user => { return user.id; }).indexOf(userId);
+    usuarios.splice(index, 1);
 })
 
-
-app.post('/api/usuarios', (req,res) => {
-  // revisar
-})
