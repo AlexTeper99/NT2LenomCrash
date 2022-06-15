@@ -37,6 +37,11 @@ const routes = [
         meta : { requiresAuth : true}
     },
     {
+        path: '/singlewallet/:id',
+        name: 'singlewallet',
+        component: SingleWalletView
+    },
+    {
         path: '/usuarios',
         name: 'usuarios',
         component: LoginView,

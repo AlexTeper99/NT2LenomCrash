@@ -1,4 +1,5 @@
 import axios from 'axios'
+import singleWalletService from "../services/singleWalletService.js"
 
 const apiClient = axios.create({
     baseURL: 'http://localhost:3001',
@@ -10,7 +11,7 @@ const apiClient = axios.create({
 
 export default {
     getSingleWallet(id) {
-        return apiClient.get('/api/getWalletById/:id');
+        return apiClient.get('/api/getWalletById/' + id);
     },
     createWallet() {
         return apiClient.post('/api/createwallet');

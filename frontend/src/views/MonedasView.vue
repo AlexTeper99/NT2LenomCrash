@@ -1,38 +1,52 @@
 <template>
   <div>
     <h2>Monedas</h2>
-
-    <li v-for="moneda in monedas" :key="moneda.ticker">
+    <div>
+    <li class="coin-list" v-for="moneda in monedas" :key="moneda.ticker">
       {{ moneda.ticker }} - {{ moneda.nombre}} - ${{moneda.precio}}
-      <button @click="eliminar(moneda.ticker)" v-if="eliminando">Eliminar</button>
-      <button @click="editarPrecio(moneda)" v-if="editando">Editar</button>
+      <button class="button-3 danger" role="button" @click="eliminar(moneda.ticker)" v-if="eliminando">Eliminar</button>
+      
+      <button class="button-4" role="button" @click="editarPrecio(moneda)" v-if="editando">Editar</button>
+    
     </li>
+    </div>
 
     <div>
       <br>
-      <button @click="agregandoMoneda()">Agregar Moneda</button>
-      <button @click="editandoMoneda()">Modificar Precio</button>
-      <button @click="eliminandoMoneda()">Eliminar Moneda</button>
+      <button class="button-3" role="button" @click="agregandoMoneda()">Agregar Moneda</button> | 
+      <button class="button-3" role="button" @click="editandoMoneda()">Modificar Precio</button> |
+      <button class="button-3 danger" role="button" @click="eliminandoMoneda()">Eliminar Moneda</button>
     </div>
 
 
 
     
-      <div v-if="agregando">
+      <div class="new-coin-div" v-if="agregando">
       
-      Ticker <input type="text" v-model="moneda.ticker" id="tickerLabel"/>
-      <br>
-      Nombre <input type="text" v-model="moneda.nombre" id="nombreLabel"/>
-      <br>
-      Precio <input type="text" v-model="moneda.precio" id="precioLabel"/>
-      <br>
+        Datos de Nueva Moneda:
+        <br />
+        <div class="inputs-align">
+          <p> Nombre </p>
+          <input class="input-coin" type="text" v-model="moneda.nombre" id="nombreLabel"/>
+          <br>
+          
+          <p> Ticker </p>
+          <input class="input-coin" type="text" v-model="moneda.ticker" id="tickerLabel"/>
+          <br>
+          
+          <p> Precio (USD) </p>
+          <input class="input-coin" type="text" v-model="moneda.precio" id="precioLabel"/>
+          <br>
+        </div>
       </div>
-    
-      <button @click="agregar" v-if="agregando">Agregar moneda</button>
+      <br/>
+      <button class="button-3" role="button" @click="agregar" v-if="agregando">Agregar Nueva Moneda -></button>
 
       <div v-if="modificando">
-      {{monedaEdit.nombre}} <input type="text" id="nuevoPrecioLabel" v-model="precioNuevo"/>
-      <button @click="actualizar">Actualizar</button>
+      <p>{{ monedaEdit.nombre }} </p>
+      Precio Nuevo: <input class="input-coin input-sm" type="text" id="nuevoPrecioLabel" v-model="precioNuevo"/>
+      
+      | <button class="button-3" role="button" @click="actualizar">Actualizar</button>
       <br> 
       </div>
     
@@ -82,8 +96,6 @@ export default {
         const obj = {...this.moneda};
         monedasService.setMoneda(obj); 
         this.monedas.push(obj);
-        this.agregando = false;
-        
       } catch (error) {
         this.mensajeError = "No se pudo obtener los datos ";
         console.log(error.error);
@@ -95,7 +107,10 @@ export default {
       // codigo pasado por Santiago, para revisar, como opcion
       this.monedas = this.monedas.filter(elto => elto.ticker != tickerBorrar);
       monedasService.deleteMoneda(tickerBorrar);
-      this.eliminando = false;
+      //this.monedas = await monedasService.getMonedas;
+
+      
+
       } catch (error) {
         this.mensajeError = "No se pudo obtener los datos ";
         console.log(error.error);
@@ -111,7 +126,7 @@ export default {
       this.precioNuevo = monedaRecibida.precio;
       this.modificando = true;
       this.monedaEdit = monedaRecibida;
-      
+
 
     },
 
@@ -143,15 +158,11 @@ export default {
     async actualizar() {
       try {
         this.modificando = false;
-      this.monedaEdit.precio = this.precioNuevo;
-      monedasService.modificarMoneda(this.monedaEdit);
-      this.modificando = false;
-      this.editando = false;
+        this.monedaEdit.precio = this.precioNuevo;
+        monedasService.modificarMoneda({...this.monedaEdit});
       } catch (error) {
         this.mensajeError = "No se pudo obtener los datos ";
         console.log(error.error);
-        
-        
       }
       
       

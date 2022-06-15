@@ -11,79 +11,70 @@ const port = 3001
 // simulo una base de datos en memoria
 // monedas
 
-let monedas = [{ticker:"BTC",nombre:"Bitcoin",precio: 30000.0},{ticker:"ETH",nombre:"Ethereum",precio: 2500.0},{ticker:"LTC",nombre:"Litecoin",precio: 68.0},
-{ticker:"XRP",nombre:"Ripple",precio: 0.25},{ticker:"ADA",nombre:"Cardano",precio: 0.1},{ticker:"USDT",nombre:"Tether",precio: 1.0}];
+let monedas = [{ ticker: "BTC", nombre: "Bitcoin", precio: 30000.0 }, { ticker: "ETH", nombre: "Ethereum", precio: 2500.0 }, { ticker: "LTC", nombre: "Litecoin", precio: 68.0 },
+    { ticker: "XRP", nombre: "Ripple", precio: 0.25 }, { ticker: "ADA", nombre: "Cardano", precio: 0.1 }, { ticker: "USDT", nombre: "Tether", precio: 1.0 }
+];
 
 app.get('/api/monedas', (req, res) => {
     // CONSULTA A BASE DE DATOS
     res.json(monedas);
 })
 
-app.post('/api/monedas/setmoneda', (req,res) => {
-  // INSERTAR EN BASE DE DATOS
-  monedas.push(req.body);
-  res.json(monedas);
+app.post('/api/monedas/setmoneda', (req, res) => {
+    // INSERTAR EN BASE DE DATOS
+    monedas.push(req.body);
+    res.json(monedas);
 })
 
-app.delete('/api/monedas/:ticker', (req,res) => {
-  monedas = monedas.filter(elto => elto.ticker !== req.params.ticker);
-  res.json(monedas);
+app.delete('/api/monedas/:ticker', (req, res) => {
+    monedas = monedas.filter(elto => elto.ticker !== req.params.ticker);
+    res.json(monedas);
 })
 
-app.put('/api/monedas/modificarmoneda', (req,res) => {
-  // MODIFICAR EN BASE DE DATOS
-  console.log(req.body);
+app.post('/api/monedas/modificarmoneda', (req, res) => {
 
-  /*
-  monedas = monedas.map((monedaActual) => {
+    let ticker = req.body.ticker;
+    let mbuscada = monedas.find(moneda => moneda.ticker === ticker);
 
-    console.log(monedaActual.ticker);
-    if (monedaActual.ticker.localeCompare(req.body.ticker)) {
-     monedaActual.precio = req.body.precio;
-    }
-  });
-  */
-  res.json(monedas);
+    console.log(mbuscada);
+
+    mbuscada.precio = req.body.precio;
+
+    res.json(monedas);
+})
+
+app.get('/api/monedas/:ticker', (req, res) => {
+    let ticker = req.params.ticker;
+    let mbuscada = monedas.find(moneda => moneda.ticker === ticker);
+    res.json(mbuscada);
 })
 
 // ---------------------- Wallets ---------------------
 
-const wallets = [{
+let wallets = [{
         id: 1,
-        coins: [{
+        coin: {
             id: 1,
             ticker: "BTC",
             cantidad: 23
-        }, {
-            ticker: "USDT",
-            cantidad: 900
-        }],
+        },
     },
     {
         id: 2,
-        coins: [{
-                id: 2,
-                ticker: "ETH",
-                cantidad: 5
-            },
-            {
-                ticker: "ADA",
-                cantidad: 9
-            },
-        ],
+        coin: {
+            id: 2,
+            ticker: "ETH",
+            cantidad: 5
+        },
     },
     {
         id: 3,
-        coins: [{
-                id: 3,
-                ticker: "LTC",
-                cantidad: 78
-            },
-            {
-                ticker: "ETH",
-                cantidad: 1
-            },
-        ],
+        coin: {
+            id: 3,
+            ticker: "LTC",
+            cantidad: 78
+        },
+
     },
 ];
 
@@ -92,8 +83,26 @@ app.get('/api/wallets', (req, res) => {
 })
 
 app.get('/api/getWalletById/:id', (req, res) => {
-    res.json(wallets.filter(wallets => wallets.id === Number(req.params.id)));
+    let wallet = wallets.find(wallet => wallet.id === Number(req.params.id));
+    res.json(wallet);
 })
+
+app.put('/api/updatewallet', (req) => {
+    let newWallet = req.body;
+    let wallet = wallets.find(wallet => wallet.id === Number(newWallet.id));
+    wallet.coin.cantidad = newWallet.coin.cantidad;
+    wallet.coin.ticker = newWallet.coin.ticker;
+
+});
+
+
+app.delete('/api/wallet/:id', (req, res) => {
+    let walletId = req.params.id;
+    console.log(walletId);
+    let index = wallets.map(wallet => { return wallet.id; }).indexOf(walletId);
+    wallets.splice(index, 1);
+
+});
 
 
 app.listen(port, () => {
@@ -103,7 +112,7 @@ app.listen(port, () => {
 
 // usuarios ---------------------------------------------------------------------------/
 
-const usuarios = [{id: 1, nombre: "Alejo", apellido: "Curello", email: "asd@gmail.com", password: "123456", listawallet: [1,2,3] }, 
+const usuarios = [{id: 1, nombre: "Alejo", apellido: "Curello", email: "asd@gmail.com", password: "123456", listawallet: [1,2,3] },
                   {id: 2, nombre: "Santiago", apellido: "SantaMaria", email: "SS@gmail.com", password: "123456", listawallet: [1,2,3] },
     {id: 3, nombre: "Admin", apellido: "Admin", email: "test@test.com", password: "123456", listawallet: []}
 ];

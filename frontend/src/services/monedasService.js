@@ -1,4 +1,3 @@
-
 // EXPRESS  ->   ESCUCHANDO EN PUERTO 8080
 // EXPONE UNA API PARA ESCUCHAR
 
@@ -29,6 +28,9 @@ export default {
     },
     modificarMoneda(moneda) {
         // chequear
-        return apiClient.put('/api/monedas/modificarmoneda', moneda);
+        return apiClient.post('/api/monedas/modificarmoneda', moneda);
+    },
+    getMoneda(ticker) {
+        return apiClient.get('/api/monedas/:ticker');
     }
 }
