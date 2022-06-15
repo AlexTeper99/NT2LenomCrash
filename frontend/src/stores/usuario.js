@@ -16,6 +16,8 @@ export const usuarioStore = defineStore('main', {
         async login(obj) {
             try {
                 const data = await axios.post('http://localhost:3001/api/login',obj)
+
+                //this.usuario = http/findUserByEmail/
                 // console.log(data);
                 this.usuario = obj;
                 this.estaLogeado = true;
