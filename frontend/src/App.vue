@@ -16,8 +16,8 @@
 
 
       <!--       ADMIN-->
-        <RouterLink v-if="estaLogeado" to="/monedas">Monedas</RouterLink>
-        <RouterLink v-if="estaLogeado" to="/usuarios">Usuarios</RouterLink>
+        <RouterLink v-if="esAdmin" to="/monedas">Monedas</RouterLink>
+        <RouterLink v-if="esAdmin" to="/usuarios">Usuarios</RouterLink>
 
 
         <router-link v-if="estaLogeado" to="/logout">Logout</router-link>
@@ -36,11 +36,12 @@ import { storeToRefs } from "pinia";
 export default {
   setup() {
     const store = usuarioStore();
-    const { usuario, estaLogeado } = storeToRefs(store);
+    const { usuario, estaLogeado, esAdmin } = storeToRefs(store);
     return {
       store,
       usuario,
       estaLogeado,
+      esAdmin
     };
   },
   data() {
