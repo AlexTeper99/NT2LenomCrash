@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {usuarioStore} from "../stores/usuario";
+import { usuarioStore } from "../stores/usuario";
 import { storeToRefs } from "pinia";
 
 export default {
@@ -28,12 +28,11 @@ export default {
     };
   },
   methods: {
-      // break hasta 21:45
     login() {
       const copiaUsuario = { ...this.usuario };
       this.login(copiaUsuario);
       if (this.estaLogeado) {
-        this.$router.push("/vendedor");
+        this.$router.push("/");
       } else {
         this.$router.push("/");
       }

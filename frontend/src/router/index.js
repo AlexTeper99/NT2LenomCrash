@@ -1,16 +1,15 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MonedaView from "../views/MonedasView.vue";
 import WalletListView from "../views/WalletListView.vue";
 import SingleWalletView from "../views/SingleWalletView.vue";
-import LoginView from "../views/LoginView.vue";
+import Usuarios from "../views/Usuarios.vue";
 import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
 
 
 
-const routes = [
-    {
+const routes = [{
         path: '/',
         name: 'home',
         component: HomeView
@@ -28,13 +27,13 @@ const routes = [
         path: '/monedas',
         name: 'monedas',
         component: MonedaView,
-        meta : { requiresAuth : true}
+        meta: { requiresAuth: true }
     },
     {
         path: '/wallets',
         name: 'wallets',
         component: WalletListView,
-        meta : { requiresAuth : true}
+        meta: { requiresAuth: true }
     },
     {
         path: '/singlewallet/:id',
@@ -44,10 +43,10 @@ const routes = [
     {
         path: '/usuarios',
         name: 'usuarios',
-        component: LoginView,
-        meta : { requiresAuth : true}
+        component: Usuarios,
+        meta: { requiresAuth: true }
     },
-    { path: '/logout', component: Logout, meta : { requiresAuth : true} },
+    { path: '/logout', component: Logout, meta: { requiresAuth: true } },
     { path: '/login', component: Login },
 ];
 
@@ -60,7 +59,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const loggedIn = localStorage.getItem('usuario');
-    if ( to.matched.some(record => record.meta.requiresAuth) && !loggedIn ) {
+    if (to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
         next('/')
     }
     next()

@@ -24,8 +24,21 @@
 </template>
 
 <script>
+import { storeToRefs } from "pinia";
+import { usuarioStore } from "../stores/usuario";
 import walletListService from "../services/walletListService.js"
+
 export default {
+  setup() {
+    const store = usuarioStore();
+    const { userid, estaLogeado } = storeToRefs(store);
+    
+    return {
+      store,
+      estaLogeado,
+      userid
+    };
+  },
   data() {
     return {
       listaWallets: [],
@@ -43,8 +56,8 @@ export default {
     },
   created: async function () {
     try {
-
-        const res = await walletListService.getWallets();
+        
+        const res = await walletListService.getWallets(this.userid);
         this.listaWallets = res.data;
     
     } catch (error) {

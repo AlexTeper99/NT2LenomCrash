@@ -24,4 +24,6 @@ export default {
         // chequear
         return apiClient.put('/api/usuarios/modificarusuario', Usuarios)
     }
+
+
 }

@@ -78,9 +78,17 @@ let wallets = [{
     },
 ];
 
-app.get('/api/wallets', (req, res) => {
-    res.json(wallets);
-})
+// get wallets for a given user
+app.get('/api/wallets/:userId', (req, res) => {
+
+    let usuario = usuarios.find(usuario => usuario.id === Number(req.params.userId));
+    let walletIds = usuario.listawallets;
+    let userWallets = walletIds.map(function(walletId) {
+        return wallets.find(wallet => wallet.id === walletId);
+    });
+
+    res.json(userWallets);
+});
 
 app.get('/api/getWalletById/:id', (req, res) => {
     let wallet = wallets.find(wallet => wallet.id === Number(req.params.id));
@@ -112,31 +120,24 @@ app.listen(port, () => {
 
 // usuarios ---------------------------------------------------------------------------/
 
-const usuarios = [{id: 1, nombre: "Alejo", apellido: "Curello", email: "asd@gmail.com", password: "123456", listawallet: [1,2] },
-                  {id: 2, nombre: "Santiago", apellido: "SantaMaria", email: "SS@gmail.com", password: "123456", listawallet: [3] },
-                  {id: 3, nombre: "Admin", apellido: "Admin", email: "test@test.com", password: "123456", listawallet: []}
+const usuarios = [{ id: 1, nombre: "Alejo", apellido: "Curello", email: "asd@gmail.com", password: "123456", listawallets: [1, 2] },
+    { id: 2, nombre: "Santiago", apellido: "SantaMaria", email: "SS@gmail.com", password: "123456", listawallets: [3] },
+    { id: 3, nombre: "Admin", apellido: "Admin", email: "test@test.com", password: "123456", listawallets: [] }
 ];
 
 
 
-app.post('/api/login', (req,res) => {
-    console.log('entre al api/login')
+app.post('/api/login', (req, res) => {
+    try {
 
-    try{
-        //METERLO EN UN IF o un try catch
         let usuario = usuarios.find(user => user.email === req.body.email && user.password === req.body.password)
-        console.log(usuario)
 
-        let variable = req.body;
-        console.log(variable)
-
-        if ( req.body && req.body.email == usuario.email && req.body.password == usuario.password ) {
+        if (req.body && req.body.email == usuario.email && req.body.password == usuario.password) {
             res.sendStatus(200);
-           // res.send(usuario)
         } else {
             res.sendStatus(400);
         }
-    }catch(error){
+    } catch (error) {
         console.log(error.error)
         res.sendStatus(500);
     }
@@ -145,16 +146,21 @@ app.post('/api/login', (req,res) => {
 
 
 
-app.get('/api/usuarios', (req,res) => {
-  res.json(usuarios);
+app.get('/api/usuarios', (req, res) => {
+    res.json(usuarios);
 })
 
-app.get('/api/getusuariosById/:id', (req, res) => {
-    let usuarioBuscado = usuarios.find(user => user.id === Number(req.params.id))
-    res.json(usuarioBuscado)
-})
+// app.get('/api/getusuariosById', (req, res) => {
+//     let usuarioBuscado = usuarios.find(user => user.id === Number(req.params.id))
+//     res.json(usuarioBuscado)
+// })
 
-app.put('/api/usuarios/modificarcontrasenia', (req,res) => {
+app.post('/api/usuarios/findUserByEmail/', (req, res) => {
+    let usuarioBuscado = usuarios.find(user => user.email === req.body.email);
+    res.json(usuarioBuscado);
+});
+
+app.put('/api/usuarios/modificarcontrasenia', (req, res) => {
     let nuevoUsuario = req.body;
 
     let usuarioBuscado = usuarios.find(us => us.id === Number(req.params.id))
@@ -163,10 +169,9 @@ app.put('/api/usuarios/modificarcontrasenia', (req,res) => {
 })
 
 
-app.delete('/api/usuarios/:id', (req,res) => {
-   let userId = req.params.id;
+app.delete('/api/usuarios/:id', (req, res) => {
+    let userId = req.params.id;
 
     let index = usuarios.map(user => { return user.id; }).indexOf(userId);
     usuarios.splice(index, 1);
 })
-

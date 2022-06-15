@@ -11,7 +11,7 @@
 
 
         <!--     LOGEADO    -->
-        <RouterLink  v-if="estaLogeado" to="/wallets">Wallets</RouterLink>
+        <RouterLink  v-if="estaLogeado" to="/wallets">Mis Wallets</RouterLink>
 
 
 
