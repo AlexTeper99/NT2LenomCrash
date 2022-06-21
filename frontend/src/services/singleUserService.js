@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-// https://jsonplaceholder.typicode.com/posts
 
 const apiClient = axios.create({
     baseURL: 'http://localhost:3001',
@@ -11,13 +10,14 @@ const apiClient = axios.create({
 })
 
 export default {
-    getUsuarios() {
-        return apiClient.get('/api/usuarios');
+    getSingleUser(id) {
+        return apiClient.get('/api/getUsuariosById/' + id);
     },
-    deleteUsuarios(codigo) {
+    deleteUsuario(codigo) {
         return apiClient.delete('/api/usuarios/' + codigo);
     },
-
-
-
+    modificarUsuario(Usuarios) {
+        // chequear
+        return apiClient.put('/api/usuarios/updateusuario', Usuarios)
+    }
 }

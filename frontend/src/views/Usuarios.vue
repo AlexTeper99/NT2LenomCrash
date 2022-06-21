@@ -60,14 +60,7 @@ export default {
     }
   },
 
-  eliminandoMoneda(){
-    if(this.eliminando == true) {
-      this.eliminando = false;
-    } else {
-      this.eliminando = true;
-    }
 
-  }
 };
 
 

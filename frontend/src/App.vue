@@ -12,8 +12,8 @@
 
         <!--     LOGEADO    -->
         <RouterLink  v-if="estaLogeado" to="/wallets">Mis Wallets</RouterLink>
-
-
+        <RouterLink v-if="estaLogeado" to="/singleuser/1" >Mi perfil</RouterLink>
+<!--        -->
 
       <!--       ADMIN-->
         <RouterLink v-if="esAdmin" to="/monedas">Monedas</RouterLink>
@@ -41,7 +41,7 @@ export default {
       store,
       usuario,
       estaLogeado,
-      esAdmin
+      esAdmin,
     };
   },
   data() {

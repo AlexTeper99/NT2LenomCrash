@@ -6,8 +6,7 @@ import SingleWalletView from "../views/SingleWalletView.vue";
 import Usuarios from "../views/Usuarios.vue";
 import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
-
-
+import SingleUserView from "../views/SingleUserView.vue";
 
 const routes = [{
         path: '/',
@@ -39,6 +38,11 @@ const routes = [{
         path: '/singlewallet/:id',
         name: 'singlewallet',
         component: SingleWalletView
+    },
+    {
+        path: '/singleuser/:id',
+        name: 'singleuser',
+        component: SingleUserView
     },
     {
         path: '/usuarios',

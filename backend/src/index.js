@@ -150,10 +150,10 @@ app.get('/api/usuarios', (req, res) => {
     res.json(usuarios);
 })
 
-// app.get('/api/getusuariosById', (req, res) => {
-//     let usuarioBuscado = usuarios.find(user => user.id === Number(req.params.id))
-//     res.json(usuarioBuscado)
-// })
+ app.get('/api/getusuariosById/:id', (req, res) => {
+     let usuarioBuscado = usuarios.find(user => user.id === Number(req.params.id))
+     res.json(usuarioBuscado)
+ })
 
 
 app.post('/api/usuarios/findUserByEmail/', (req, res) => {
@@ -161,15 +161,6 @@ app.post('/api/usuarios/findUserByEmail/', (req, res) => {
     res.json(usuarioBuscado);
 });
 
-/*
-app.put('/api/usuarios/modificarcontrasenia', (req, res) => {
-    let nuevoUsuario = req.body;
-
-    let usuarioBuscado = usuarios.find(us => us.id === Number(req.params.id))
-
-    usuarioBuscado.password = nuevoUsuario.password;
-})
-*/
 
 app.delete('/api/usuarios/:id', (req, res) => {
     let userId = req.params.id;
@@ -186,20 +177,11 @@ app.post('/api/usuarios/setusuarios', (req, res) => {
     res.json(usuarios);
 })
 
-app.post('/api/usuarios/modificarusuario', (req, res) => {
-
-    let idUsuario = req.body.id;
-    let uBuscado = usuarios.find(usuario => usuario.id === idUsuario);
-
-    uBuscado.password = req.body.password;
-
-
-    res.json(usuarios);
-})
-
-/*
-app.get('/api/monedas/:ticker', (req, res) => {
-    let ticker = req.params.ticker;
-    let mbuscada = monedas.find(moneda => moneda.ticker === ticker);
-    res.json(mbuscada);
-})*/
+app.put('/api/updateusuario', (req) => {
+    let newUsuario = req.body;
+    let usuario = usuarios.find(usuario => usuario.id === Number(newUsuario.id));
+    usuario.nombre = newUsuario.nombre;
+    usuario.apellido = newUsuario.apellido;
+    usuario.email = newUsuario.email;
+    usuario.password = newUsuario.password;
+});
