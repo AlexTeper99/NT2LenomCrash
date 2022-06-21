@@ -16,8 +16,8 @@ export default {
     deleteUsuario(codigo) {
         return apiClient.delete('/api/usuarios/' + codigo);
     },
-    modificarUsuario(Usuarios) {
+    modificarUsuario(Usuario) {
         // chequear
-        return apiClient.put('/api/usuarios/updateusuario', Usuarios)
+        return apiClient.put('/api/usuarios/updateusuario', Usuario)
     }
 }

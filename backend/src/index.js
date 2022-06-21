@@ -144,7 +144,9 @@ app.post('/api/login', (req, res) => {
 
 })
 
-
+app.get('/api/wallets', (req, res) => {
+    res.json(wallets);
+})
 
 app.get('/api/usuarios', (req, res) => {
     res.json(usuarios);
@@ -177,9 +179,11 @@ app.post('/api/usuarios/setusuarios', (req, res) => {
     res.json(usuarios);
 })
 
-app.put('/api/updateusuario', (req) => {
+app.put('/api/usuarios/updateusuario', (req) => {
     let newUsuario = req.body;
+    console.log("new usuarioo " + newUsuario)
     let usuario = usuarios.find(usuario => usuario.id === Number(newUsuario.id));
+    console.log("usuario buscado en la BD" + usuario)
     usuario.nombre = newUsuario.nombre;
     usuario.apellido = newUsuario.apellido;
     usuario.email = newUsuario.email;

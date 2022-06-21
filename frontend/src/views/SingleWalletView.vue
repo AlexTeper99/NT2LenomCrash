@@ -14,6 +14,8 @@
     <p>Editar Wallet </p>
       <p>
         Ticker: <input class="input-coin" type="text" v-model="coinEdit.ticker" id="tickerLabel"/>  
+       </p>
+      <p>
         Cantidad: <input class="input-coin" type="text" v-model="coinEdit.cantidad" id="cantidadLabel"/>
       </p>
         <br/>  
