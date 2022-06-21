@@ -4,13 +4,16 @@
     <h2>Mis Wallets</h2>
     <br/>
     <div v-for="wallet in listaWallets" :key="wallet.id">
-      <button @click="editarWallet(wallet.id)">Editar Wallet {{wallet.id}}</button>
-      
-      {{wallet.coin}}
-      
       <br/>
-      _______________________________________________
-      <br/>
+      
+      <div class="single-wallet-select">
+      <p>
+        Moneda : {{ wallet.coin.ticker }} | Cantidad : {{ wallet.coin.cantidad }}
+      </p>
+      <button class="button-4" role="button" @click="editarWallet(wallet.id)">Editar Wallet</button>
+            
+      </div>
+
     </div>
   </div>
   
@@ -21,33 +24,40 @@
 </template>
 
 <script>
+import { storeToRefs } from "pinia";
+import { usuarioStore } from "../stores/usuario";
 import walletListService from "../services/walletListService.js"
+
 export default {
+  setup() {
+    const store = usuarioStore();
+    const { userid, estaLogeado } = storeToRefs(store);
+    
+    return {
+      store,
+      estaLogeado,
+      userid
+    };
+  },
   data() {
     return {
       listaWallets: [],
       wallet: {
         id: null,
-        coins: [{
+        coin: {
           id:null,
+          ticker:null,
           cantidad:null
-        }],
+        },
       },
       mensajeError: "",
-      selectedWallet: {
-        id: null,
-        coins: [{
-          id:null,
-          cantidad:null
-        }],
-      },
       hasWallet: false
     };
     },
   created: async function () {
     try {
-
-        const res = await walletListService.getWallets();
+        
+        const res = await walletListService.getWallets(this.userid);
         this.listaWallets = res.data;
     
     } catch (error) {

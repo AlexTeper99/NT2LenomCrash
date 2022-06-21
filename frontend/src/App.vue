@@ -1,18 +1,26 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from '@/components/HelloWorld.vue'
-</script>
-
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img alt="Vue logo" class="logo" src="@/assets/logo_lenom.png" width="125" height="125" />
 
     <div class="wrapper">
       <nav>
+      <!--      no  logeado-->
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/monedas">Monedas</RouterLink>
-        <RouterLink to="/wallets">Wallets</RouterLink>
+        <router-link v-if="!estaLogeado" to="/login">Login</router-link>
+
+
+        <!--     LOGEADO    -->
+        <RouterLink  v-if="estaLogeado" to="/wallets">Mis Wallets</RouterLink>
+        <RouterLink v-if="estaLogeado" to="/singleuser/1" >Mi perfil</RouterLink>
+
+
+      <!--       ADMIN-->
+        <RouterLink v-if="esAdmin" to="/monedas">Monedas</RouterLink>
+        <RouterLink v-if="esAdmin" to="/usuarios">Usuarios</RouterLink>
+
+
+        <router-link v-if="estaLogeado" to="/logout">Logout</router-link>
       </nav>
     </div>
   </header>
@@ -20,9 +28,39 @@ import HelloWorld from '@/components/HelloWorld.vue'
   <RouterView />
 </template>
 
+
+<script>
+import {usuarioStore} from "./stores/usuario";
+import { storeToRefs } from "pinia";
+
+export default {
+  setup() {
+    const store = usuarioStore();
+    const { usuario, estaLogeado, esAdmin } = storeToRefs(store);
+    return {
+      store,
+      usuario,
+      estaLogeado,
+      esAdmin,
+    };
+  },
+  data() {
+    return {
+    };
+  },
+  methods: {
+  },
+};
+
+
+</script>
+
+
+
 <style>
 
 
+@import '@/assets/base.css';
 #app {
   max-width: 1280px;
   margin: 0 auto;
