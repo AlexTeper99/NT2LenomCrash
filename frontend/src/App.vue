@@ -13,7 +13,7 @@
         <!--     LOGEADO    -->
         <RouterLink  v-if="estaLogeado" to="/wallets">Mis Wallets</RouterLink>
         <RouterLink v-if="estaLogeado" to="/singleuser/1" >Mi perfil</RouterLink>
-<!--        -->
+<!-- ESTA HARDOCDEADO EL USERID, COMO LO CAMBIO PARA QUE AGARRE DE LA SESION?       -->
 
       <!--       ADMIN-->
         <RouterLink v-if="esAdmin" to="/monedas">Monedas</RouterLink>
