@@ -36,9 +36,24 @@
 </template>
 
 <script>
+
+import { storeToRefs } from "pinia";
+import { usuarioStore } from "../stores/usuario";
 import { useRoute } from "vue-router"
 import singleWalletService from "../services/singleWalletService.js"
+
+import walletListService from "../services/walletListService.js"
 export default {
+  setup() {
+    const store = usuarioStore();
+    const { userid, estaLogeado } = storeToRefs(store);
+    
+    return {
+      store,
+      estaLogeado,
+      userid
+    };
+  },
   data() {
     return {
       coinEdit: {},
@@ -52,7 +67,7 @@ export default {
       
       let walletId = this.$route.params.id;
       let wallet = await singleWalletService.getSingleWallet(walletId);
-      this.wallet = wallet.data;
+      this.wallet = await wallet.data;
       this.coinEdit = { ... wallet.data.coin };
       
     
@@ -73,11 +88,10 @@ export default {
       await singleWalletService.modificarWallet(updatedWallet);
     },
     async eliminarWallet() {
-        let id = this.wallet.id;
-        await singleWalletService.deleteWallet(id).then(function() {
-          this.$router.push('/wallets');
-        });
-        
+        let walletId = this.wallet.id;
+        await singleWalletService.deleteWallet(walletId,this.userid);
+        this.$router.push('/wallets');
+
     },
     },
 };

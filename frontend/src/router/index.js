@@ -23,7 +23,7 @@ const routes = [{
             import ('../views/AboutView.vue')
     },
     {
-        path: '/monedas',
+        path: '/    ',
         name: 'monedas',
         component: MonedaView,
         meta: { requiresAuth: true }
