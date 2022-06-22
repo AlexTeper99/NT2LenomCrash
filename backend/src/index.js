@@ -10,9 +10,40 @@ const port = 3001
 
 // simulo una base de datos en memoria
 // monedas
+let usuarios = [{ id: 1, nombre: "Alejo", apellido: "Curello", email: "asd@gmail.com", password: "123456", listawallets: [1, 2] },
+    { id: 2, nombre: "Santiago", apellido: "SantaMaria", email: "SS@gmail.com", password: "123456", listawallets: [3] },
+    { id: 3, nombre: "Admin", apellido: "Admin", email: "test@test.com", password: "123456", listawallets: [] }
+];
 
 let monedas = [{ ticker: "BTC", nombre: "Bitcoin", precio: 30000.0 }, { ticker: "ETH", nombre: "Ethereum", precio: 2500.0 }, { ticker: "LTC", nombre: "Litecoin", precio: 68.0 },
     { ticker: "XRP", nombre: "Ripple", precio: 0.25 }, { ticker: "ADA", nombre: "Cardano", precio: 0.1 }, { ticker: "USDT", nombre: "Tether", precio: 1.0 }
+];
+
+let wallets = [{
+        id: 1,
+        coin: {
+            id: 1,
+            ticker: "BTC",
+            cantidad: 23
+        },
+    },
+    {
+        id: 2,
+        coin: {
+            id: 2,
+            ticker: "ETH",
+            cantidad: 5
+        },
+    },
+    {
+        id: 3,
+        coin: {
+            id: 3,
+            ticker: "LTC",
+            cantidad: 78
+        },
+
+    },
 ];
 
 app.get('/api/monedas', (req, res) => {
@@ -51,43 +82,23 @@ app.get('/api/monedas/:ticker', (req, res) => {
 
 // ---------------------- Wallets ---------------------
 
-let wallets = [{
-        id: 1,
-        coin: {
-            id: 1,
-            ticker: "BTC",
-            cantidad: 23
-        },
-    },
-    {
-        id: 2,
-        coin: {
-            id: 2,
-            ticker: "ETH",
-            cantidad: 5
-        },
-    },
-    {
-        id: 3,
-        coin: {
-            id: 3,
-            ticker: "LTC",
-            cantidad: 78
-        },
 
-    },
-];
+app.get('/api/allwallets', (req, res) => {
+    res.json(wallets);
+});
 
 // get wallets for a given user
-app.get('/api/wallets/:userId', (req, res) => {
-
+app.get('/api/wallets/:userId', async(req, res) => {
+    let userWallets;
+    let walletIds = [];
     let usuario = usuarios.find(usuario => usuario.id === Number(req.params.userId));
-    let walletIds = usuario.listawallets;
-    let userWallets = walletIds.map(function(walletId) {
+    walletIds = usuario.listawallets;
+    userWallets = walletIds.map(function(walletId) {
         return wallets.find(wallet => wallet.id === walletId);
     });
 
     res.json(userWallets);
+
 });
 
 app.get('/api/getWalletById/:id', (req, res) => {
@@ -103,12 +114,14 @@ app.put('/api/updatewallet', (req) => {
 
 });
 
+// DELETE A WALLET BY ID
+app.post('/api/wallet/deleteWallet', (req, res) => {
+    let walletId = Number(req.body.walletId);
+    let userId = Number(req.body.userId);
 
-app.delete('/api/wallet/:id', (req, res) => {
-    let walletId = req.params.id;
-    console.log(walletId);
-    let index = wallets.map(wallet => { return wallet.id; }).indexOf(walletId);
-    wallets.splice(index, 1);
+    wallets = wallets.filter(wallet => wallet.id !== walletId);
+    let user = usuarios.find(user => user.id === userId);
+    user.listawallets = user.listawallets.filter(id => id !== walletId);
 
 });
 
@@ -119,12 +132,6 @@ app.listen(port, () => {
 
 
 // usuarios ---------------------------------------------------------------------------/
-
-const usuarios = [{ id: 1, nombre: "Alejo", apellido: "Curello", email: "asd@gmail.com", password: "123456", listawallets: [1, 2] },
-    { id: 2, nombre: "Santiago", apellido: "SantaMaria", email: "SS@gmail.com", password: "123456", listawallets: [3] },
-    { id: 3, nombre: "Admin", apellido: "Admin", email: "test@test.com", password: "123456", listawallets: [] }
-];
-
 
 
 app.post('/api/login', (req, res) => {
@@ -152,10 +159,10 @@ app.get('/api/usuarios', (req, res) => {
     res.json(usuarios);
 })
 
- app.get('/api/getusuariosById/:id', (req, res) => {
-     let usuarioBuscado = usuarios.find(user => user.id === Number(req.params.id))
-     res.json(usuarioBuscado)
- })
+app.get('/api/getusuariosById/:id', (req, res) => {
+    let usuarioBuscado = usuarios.find(user => user.id === Number(req.params.id))
+    res.json(usuarioBuscado)
+})
 
 
 app.post('/api/usuarios/findUserByEmail/', (req, res) => {
