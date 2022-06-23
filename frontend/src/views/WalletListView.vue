@@ -2,7 +2,7 @@
 <template>
   <div>
     <h2>Mis Wallets</h2>
-    <br/>
+    
     <div v-for="wallet in listaWallets" :key="wallet.id">
       <br/>
       
@@ -11,11 +11,34 @@
         Moneda : {{ wallet.coin.ticker }} | Cantidad : {{ wallet.coin.cantidad }}
       </p>
       <button class="button-4" role="button" @click="editarWallet(wallet.id)">Editar Wallet</button>
-            
       </div>
 
     </div>
+    <div>
+      <br/>  
+    <h2>Agregar Wallet</h2>
+    <div class="new-coin-div single-wallet-select">
+      
+        Datos de Nueva Billetera:
+        ID: {{ newWallet.id }}
+        <br />
+        <div class="inputs-align">
+          <p> Ticker Moneda </p>
+          <input class="input-coin" type="text" v-model="newWallet.coin.ticker"/>
+          <br>
+          
+          <p> Cantidad </p>
+          <input class="input-coin" type="text" v-model="newWallet.coin.cantidad"/>
+          <br>
+
+          
+        </div>
+      </div>
+      <br/>
+      <button class="button-3" role="button" @click="agregarWallet()">Agregar Nueva Wallet -></button>
   </div>
+  </div>
+  
   
   <div>
   </div>
@@ -27,6 +50,7 @@
 import { storeToRefs } from "pinia";
 import { usuarioStore } from "../stores/usuario";
 import walletListService from "../services/walletListService.js"
+
 
 export default {
   setup() {
@@ -43,9 +67,15 @@ export default {
     return {
       listaWallets: [],
       wallet: {
-        id: null,
+        id: 0,
         coin: {
-          id:null,
+          ticker:null,
+          cantidad:null
+        },
+      },
+      newWallet: {
+        id: 0,
+        coin: {
           ticker:null,
           cantidad:null
         },
@@ -59,6 +89,7 @@ export default {
         
         const res = await walletListService.getWallets(this.userid);
         this.listaWallets = res.data;
+        this.userIdData = this.userid;
     
     } catch (error) {
         this.mensajeError = "No se pudo obtener los datos";
@@ -68,6 +99,13 @@ export default {
   methods: {
     editarWallet(id) {
       this.$router.push('/singlewallet/'+id);
+    },
+    async agregarWallet() {
+      let newWalletid = await walletListService.getWalletLastId();
+      this.newWallet.id = newWalletid.data;
+      let wnew = { ... this.newWallet }
+      walletListService.createWallet(wnew, this.userid);
+      // this.$router.push('/singlewallet/'+this.newWallet.id);
     },
     
     },

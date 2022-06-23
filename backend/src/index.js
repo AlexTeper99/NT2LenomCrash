@@ -22,7 +22,6 @@ let monedas = [{ ticker: "BTC", nombre: "Bitcoin", precio: 30000.0 }, { ticker: 
 let wallets = [{
         id: 1,
         coin: {
-            id: 1,
             ticker: "BTC",
             cantidad: 23
         },
@@ -30,7 +29,6 @@ let wallets = [{
     {
         id: 2,
         coin: {
-            id: 2,
             ticker: "ETH",
             cantidad: 5
         },
@@ -38,11 +36,9 @@ let wallets = [{
     {
         id: 3,
         coin: {
-            id: 3,
             ticker: "LTC",
             cantidad: 78
         },
-
     },
 ];
 
@@ -67,8 +63,6 @@ app.post('/api/monedas/modificarmoneda', (req, res) => {
     let ticker = req.body.ticker;
     let mbuscada = monedas.find(moneda => moneda.ticker === ticker);
 
-    console.log(mbuscada);
-
     mbuscada.precio = req.body.precio;
 
     res.json(monedas);
@@ -82,6 +76,23 @@ app.get('/api/monedas/:ticker', (req, res) => {
 
 // ---------------------- Wallets ---------------------
 
+// Get last wallet id
+app.get('/api/wallets/getLastId', (req, res) => {
+    let value = wallets.length + 1;
+    res.send(value.toString());
+});
+
+// Create a wallet
+app.post('/api/wallets/createwallet', (req, res) => {
+    console.log('creando wallet .. ');
+    let userid = req.body.data.userid;
+    let newWallet = req.body.data.wallet;
+
+    wallets.push(newWallet);
+    let user = usuarios.find(user => user.id === userid);
+    user.listawallets.push(newWallet.id);
+
+});
 
 app.get('/api/allwallets', (req, res) => {
     res.json(wallets);
@@ -91,7 +102,8 @@ app.get('/api/allwallets', (req, res) => {
 app.get('/api/wallets/:userId', async(req, res) => {
     let userWallets;
     let walletIds = [];
-    let usuario = usuarios.find(usuario => usuario.id === Number(req.params.userId));
+    let usuario = {};
+    usuario = usuarios.find(usuario => usuario.id === Number(req.params.userId));
     walletIds = usuario.listawallets;
     userWallets = walletIds.map(function(walletId) {
         return wallets.find(wallet => wallet.id === walletId);
@@ -126,9 +138,6 @@ app.post('/api/wallet/deleteWallet', (req, res) => {
 });
 
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
 
 
 // usuarios ---------------------------------------------------------------------------/
@@ -188,11 +197,17 @@ app.post('/api/usuarios/setusuarios', (req, res) => {
 
 app.put('/api/usuarios/updateusuario', (req) => {
     let newUsuario = req.body;
-    console.log("new usuarioo " + newUsuario)
+    // console.log("new usuarioo " + newUsuario)
     let usuario = usuarios.find(usuario => usuario.id === Number(newUsuario.id));
-    console.log("usuario buscado en la BD" + usuario)
+    // console.log("usuario buscado en la BD" + usuario)
     usuario.nombre = newUsuario.nombre;
     usuario.apellido = newUsuario.apellido;
     usuario.email = newUsuario.email;
     usuario.password = newUsuario.password;
 });
+
+
+
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+})
