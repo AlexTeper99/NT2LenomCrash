@@ -109,8 +109,8 @@ export default {
       
       let wnew = { ...this.newWallet };
       walletListService.createWallet(wnew, this.userid);
-      this.listaWallets.push({...wnew});
-      
+      this.listaWallets.push(wnew);
+      // obj no se copia bien ?
     },
     
     },
