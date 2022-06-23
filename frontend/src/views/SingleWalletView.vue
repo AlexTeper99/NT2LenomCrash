@@ -57,7 +57,13 @@ export default {
   data() {
     return {
       coinEdit: {},
-      wallet: {},
+      wallet: {
+        id: 0,
+        coin: {
+          ticker:null,
+          cantidad:null
+        },
+      },
       mensajeError: "",
       walletCargada: false
     };
@@ -88,9 +94,13 @@ export default {
       await singleWalletService.modificarWallet(updatedWallet);
     },
     async eliminarWallet() {
+      
         let walletId = this.wallet.id;
-        await singleWalletService.deleteWallet(walletId,this.userid);
-        this.$router.push('/wallets');
+        let userId = this.userid;
+        // console.log(walletId)
+        // console.log(userid)
+        await singleWalletService.deleteWallet(walletId, userId);
+        // this.$router.push('/wallets');
 
     },
     },

@@ -10,12 +10,14 @@ const port = 3001
 
 // simulo una base de datos en memoria
 // monedas
-let usuarios = [{ id: 1, nombre: "Alejo", apellido: "Curello", email: "asd@gmail.com", password: "123456", listawallets: [1, 2] },
+let usuarios = [
+    { id: 1, nombre: "Alejo", apellido: "Curello", email: "asd@gmail.com", password: "123456", listawallets: [1, 2] },
     { id: 2, nombre: "Santiago", apellido: "SantaMaria", email: "SS@gmail.com", password: "123456", listawallets: [3] },
     { id: 3, nombre: "Admin", apellido: "Admin", email: "test@test.com", password: "123456", listawallets: [] }
 ];
 
-let monedas = [{ ticker: "BTC", nombre: "Bitcoin", precio: 30000.0 }, { ticker: "ETH", nombre: "Ethereum", precio: 2500.0 }, { ticker: "LTC", nombre: "Litecoin", precio: 68.0 },
+let monedas = [
+    { ticker: "BTC", nombre: "Bitcoin", precio: 30000.0 }, { ticker: "ETH", nombre: "Ethereum", precio: 2500.0 }, { ticker: "LTC", nombre: "Litecoin", precio: 68.0 },
     { ticker: "XRP", nombre: "Ripple", precio: 0.25 }, { ticker: "ADA", nombre: "Cardano", precio: 0.1 }, { ticker: "USDT", nombre: "Tether", precio: 1.0 }
 ];
 
@@ -84,7 +86,7 @@ app.get('/api/wallets/getLastId', (req, res) => {
 
 // Create a wallet
 app.post('/api/wallets/createwallet', (req, res) => {
-    console.log('creando wallet .. ');
+
     let userid = req.body.data.userid;
     let newWallet = req.body.data.wallet;
 
@@ -128,8 +130,8 @@ app.put('/api/updatewallet', (req) => {
 
 // DELETE A WALLET BY ID
 app.post('/api/wallet/deleteWallet', (req, res) => {
-    let walletId = Number(req.body.walletId);
-    let userId = Number(req.body.userId);
+    let walletId = Number(req.body.data.walletId);
+    let userId = Number(req.body.data.userId);
 
     wallets = wallets.filter(wallet => wallet.id !== walletId);
     let user = usuarios.find(user => user.id === userId);

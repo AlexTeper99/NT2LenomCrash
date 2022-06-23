@@ -84,15 +84,15 @@ export default {
       hasWallet: false
     };
     },
-  created: async function () {
+  mounted: async function () {
     this.getuserWallets();
   },
   methods: {
     async getuserWallets() {
       try {
         
-        let res = await walletListService.getWallets(this.userid);
-        this.listaWallets = res.data;
+        let wallets = await walletListService.getWallets(this.userid);
+        this.listaWallets = wallets.data;
         this.userIdData = this.userid;
     
       } catch (error) {
@@ -109,10 +109,9 @@ export default {
       
       let wnew = { ...this.newWallet };
       walletListService.createWallet(wnew, this.userid);
-      this.listaWallets.push(wnew);
+      this.listaWallets.push({...wnew});
       
     },
-    
     
     },
 };

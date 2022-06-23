@@ -15,9 +15,6 @@ export default {
     createWallet(wallet, userid) {
         return apiClient.post('/api/wallets/createwallet', { data: { wallet: wallet, userid: userid } });
     },
-    deleteWallet(id) {
-        return apiClient.delete('/api/wallet/' + id);
-    },
     modificarWallet(wallet) {
         return apiClient.put('/api/updatewallet', wallet);
     },
