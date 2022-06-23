@@ -91,7 +91,7 @@ export default {
     async getuserWallets() {
       try {
         
-        const res = await walletListService.getWallets(this.userid);
+        let res = await walletListService.getWallets(this.userid);
         this.listaWallets = res.data;
         this.userIdData = this.userid;
     
@@ -106,11 +106,13 @@ export default {
     async agregarWallet() {
       let newWalletid = await walletListService.getWalletLastId();
       this.newWallet.id = newWalletid.data;
+      
       let wnew = { ...this.newWallet };
       walletListService.createWallet(wnew, this.userid);
-      this.listaWallets.push({...wnew});
+      this.listaWallets.push(wnew);
       
     },
+    
     
     },
 };

@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import MonedaView from "../views/MonedasView.vue";
+import MonedasView from "../views/MonedasView.vue";
 import WalletListView from "../views/WalletListView.vue";
 import SingleWalletView from "../views/SingleWalletView.vue";
 import Usuarios from "../views/Usuarios.vue";
@@ -23,9 +23,9 @@ const routes = [{
             import ('../views/AboutView.vue')
     },
     {
-        path: '/    ',
+        path: '/monedas',
         name: 'monedas',
-        component: MonedaView,
+        component: MonedasView,
         meta: { requiresAuth: true }
     },
     {
@@ -37,7 +37,8 @@ const routes = [{
     {
         path: '/singlewallet/:id',
         name: 'singlewallet',
-        component: SingleWalletView
+        component: SingleWalletView,
+        meta: { requiresAuth: true }
     },
     {
         path: '/singleuser/:id',
