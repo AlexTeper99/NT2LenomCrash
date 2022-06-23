@@ -85,27 +85,31 @@ export default {
     };
     },
   created: async function () {
-    try {
+    this.getuserWallets();
+  },
+  methods: {
+    async getuserWallets() {
+      try {
         
         const res = await walletListService.getWallets(this.userid);
         this.listaWallets = res.data;
         this.userIdData = this.userid;
     
-    } catch (error) {
+      } catch (error) {
         this.mensajeError = "No se pudo obtener los datos";
-        console.log(error.error);
-    }
-  },
-  methods: {
+          console.log(error.error);
+      }
+    },
     editarWallet(id) {
       this.$router.push('/singlewallet/'+id);
     },
     async agregarWallet() {
       let newWalletid = await walletListService.getWalletLastId();
       this.newWallet.id = newWalletid.data;
-      let wnew = { ... this.newWallet }
+      let wnew = { ...this.newWallet };
       walletListService.createWallet(wnew, this.userid);
-      // this.$router.push('/singlewallet/'+this.newWallet.id);
+      this.listaWallets.push({...wnew});
+      
     },
     
     },
