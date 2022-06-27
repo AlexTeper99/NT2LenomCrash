@@ -93,6 +93,7 @@ app.post('/api/wallets/createwallet', (req, res) => {
     wallets.push(newWallet);
     let user = usuarios.find(user => user.id === userid);
     user.listawallets.push(newWallet.id);
+    res.send('Wallet Creada');
 
 });
 

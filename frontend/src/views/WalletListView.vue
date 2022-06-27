@@ -113,13 +113,11 @@ export default {
         
         let wnew = { ...this.newWallet };
 
-        this.listaWallets.push(wnew);
-        await walletListService.createWallet(wnew, this.userid);
-        this.newWallet.id = 0;
-        this.newWallet.coin.ticker = null;
-        this.newWallet.coin.cantidad = null;
+        let res = await walletListService.createWallet(wnew, this.userid);
+        if(res) {
+            this.getuserWallets();
+        }
         
-      
       } catch (error) {
         this.mensajeError = "No se pudo obtener los datos ";
         console.log(error.error);
