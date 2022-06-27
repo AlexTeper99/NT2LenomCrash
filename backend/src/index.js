@@ -136,6 +136,7 @@ app.post('/api/wallet/deleteWallet', (req, res) => {
     wallets = wallets.filter(wallet => wallet.id !== walletId);
     let user = usuarios.find(user => user.id === userId);
     user.listawallets = user.listawallets.filter(id => id !== walletId);
+    res.send('Wallet Eliminada');
 
 });
 
@@ -211,5 +212,5 @@ app.put('/api/usuarios/updateusuario', (req) => {
 
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`App listening on port ${port}`)
 })

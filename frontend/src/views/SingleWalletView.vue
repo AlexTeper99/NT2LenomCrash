@@ -93,16 +93,22 @@ export default {
       let updatedWallet = {... this.wallet };
       await singleWalletService.modificarWallet(updatedWallet);
     },
-    async eliminarWallet() {
+     async eliminarWallet() {
       
         let walletId = this.wallet.id;
         let userId = this.userid;
         // console.log(walletId)
         // console.log(userid)
-        await singleWalletService.deleteWallet(walletId, userId);
-        // this.$router.push('/wallets');
+        let res = await singleWalletService.deleteWallet(walletId, userId);
+        if(res) {
+            this.redirect();
+        }
 
     },
+    redirect() {
+      // console.log('redirecting ... ');
+        this.$router.push('/wallets');
+    }
     },
 };
 </script>

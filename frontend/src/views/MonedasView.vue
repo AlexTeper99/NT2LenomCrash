@@ -103,14 +103,9 @@ export default {
     },
     async eliminar(tickerBorrar) {
       try {
-
-      // codigo pasado por Santiago, para revisar, como opcion
-      this.monedas = this.monedas.filter(elto => elto.ticker != tickerBorrar);
-      monedasService.deleteMoneda(tickerBorrar);
-      //this.monedas = await monedasService.getMonedas;
-
-      
-
+        this.monedas = this.monedas.filter(elto => elto.ticker != tickerBorrar);
+        monedasService.deleteMoneda(tickerBorrar);
+        //this.monedas = await monedasService.getMonedas;
       } catch (error) {
         this.mensajeError = "No se pudo obtener los datos ";
         console.log(error.error);
